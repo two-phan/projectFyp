@@ -42,15 +42,26 @@ def getProduct(request,pk):
 
 
     
+# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     def validate(self, attrs):
+#         data = super().validate(attrs)
+#         serializer = UserSerializerWithToken(self.user).data
+#         for k, v in serializer.items():
+#             data[k] = v
+
+#         return data
+    
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
+        # Allow email as username
+        attrs['username'] = attrs.get('email', attrs.get('username'))
         data = super().validate(attrs)
+        
+        # Add user data to response
         serializer = UserSerializerWithToken(self.user).data
         for k, v in serializer.items():
-            data[k] = v
-
+            data[k] = v           
         return data
-    
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -76,22 +87,13 @@ def signupUser(request):
     
 
     try:
-        # user = User.objects.create_user(
-        #     first_name=data['fname'],
-        #     last_name=data['lname'],
-        #     username=data['email'],
-        #     email=data['email'],
-        #     password=make_password(data['password']),
-
-        # )
-
         user = User.objects.create_user(
             first_name=data['fname'],
             last_name=data['lname'],
             username=data['email'],
             email=data['email'],
-            password=make_password(data['password']),
-            is_active=False
+            password=data['password'],
+            is_active=False,
         )
         #generate token for sending mail 
         email_subject = 'Activate your account'
@@ -106,7 +108,7 @@ def signupUser(request):
         # print(message)
         email_message=EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[data['email']])
         email_message.send()
-        message = {'details': 'Please chack email activation link has been sent to your email'}
+        message = {'details': 'Please check email activation link has been sent to your email'}
         return Response(message)
     
         
@@ -124,6 +126,8 @@ def signupUser(request):
         message = {'details': 'User with this email already exists or something went wrong'}
         return Response(message)
     
+
+
 class ActivateAccountView(View):
     def get(self, request, uidb64, token):
         try:

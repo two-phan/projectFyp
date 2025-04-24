@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Carousel, Container } from "react-bootstrap";
 import { Row, Col, Card } from "react-bootstrap";
-import Shop from "./Shop";
 import Product from "../components/Product";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { listProducts } from "../actions/productsActions";
 import { useDispatch, useSelector } from "react-redux";
+import './Home.css';
+
 
 function Home() {
   const dispatch = useDispatch();
@@ -20,6 +21,34 @@ function Home() {
   return (
     <>
       <Container>
+        {/* Carousel Section */}
+        <Carousel className="mb-4">
+          <Carousel.Item interval={3000}>
+            <img
+              className="d-block w-100"
+              src="https://img.freepik.com/free-vector/hand-drawn-thrift-store-illustration_23-2150066330.jpg?w=740&t=st=1673430183~exp=1673430783~hmac=8d779a655bbab4bfdad030f81febe39e393f9c8983db6f36a99e8181fe001f21"
+              alt="First slide"
+            />
+            
+          </Carousel.Item>
+          <Carousel.Item interval={3000}>
+            <img
+              className="d-block w-100"
+              src="https://img.freepik.com/premium-vector/hand-drawn-thrift-store-illustration_23-2150066313.jpg"
+              alt="Second slide"
+            />
+         
+          </Carousel.Item>
+          <Carousel.Item interval={3000}>
+            <img
+              className="d-block w-100"
+              src="https://tse2.mm.bing.net/th/id/OIP.6Phkd3oouTo8skPPGrwBLwHaE8?w=826&h=551&rs=1&pid=ImgDetMain"
+              alt="Third slide"
+            />
+           
+          </Carousel.Item>
+        </Carousel>
+        
         <br />
         <h1>Latest Products</h1>
 

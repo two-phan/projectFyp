@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { InputGroup } from "react-bootstrap";
 import Message from "../components/Message";
-import { validEmail, validPassword } from "../components/Validpass";
+// import { validEmail, validPassword } from "../components/Validpass";
 import { login } from "../actions/userActions";
 import Loader from "../components/Loader";
 
@@ -13,6 +13,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [pass1, setPass1] = useState("");
   const [show, changeshow] = useState("fa fa-eye-slash");
+  const [message, setMessage] = useState("");
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -22,7 +23,7 @@ function Login() {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo ) {
       navigate("/");
     }
   }, [userInfo, redirect]);
@@ -32,6 +33,8 @@ function Login() {
 
     dispatch(login(email, pass1));
   };
+
+  
 
   const showPassword = () => {
     var x = document.getElementById("pass1");

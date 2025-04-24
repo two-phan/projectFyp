@@ -1,0 +1,133 @@
+/* Main Container */
+.container {
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+  }
+  
+  /* Carousel */
+  .carousel {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.5rem;
+  }
+  
+  .carousel-item img {
+    height: 450px;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 5%;
+  }
+  
+  .carousel-indicators {
+    bottom: 15px;
+  }
+  
+  .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 6px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+  }
+  
+  .carousel-indicators .active {
+    background-color: #000000;
+  }
+  
+  /* Page Title */
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #28a745;
+    border-radius: 2px;
+  }
+  
+  /* Loading and Error States */
+  h2, h3 {
+    text-align: center;
+    padding: 3rem 0;
+  }
+  
+  h2 {
+    color: #6c757d;
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    color: #dc3545;
+    font-size: 1.5rem;
+  }
+  
+  /* Products Grid */
+  .row {
+    margin-top: 1.5rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 1200px) {
+    .carousel-item img {
+      height: 400px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .carousel-item img {
+      height: 350px;
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .carousel-item img {
+      height: 300px;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 8%;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .carousel-item img {
+      height: 250px;
+    }
+    
+    h1 {
+      font-size: 1.6rem;
+    }
+    
+    .carousel-indicators button {
+      width: 8px;
+      height: 8px;
+      margin: 0 4px;
+    }
+  }

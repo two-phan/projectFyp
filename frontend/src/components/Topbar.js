@@ -23,16 +23,17 @@ function Navbar() {
 
       <ul className="nav-links">
         <li><a href="/">Home</a></li>
-        <li><a href="/shop">Shop</a></li>
-        <li><a href="#">Categories</a></li>
+        <li><a href="/category">Category</a></li>
+        <li><a href="/rental">Rental</a></li>
+        
       </ul>
 
       <div className="search-cart-auth">
         <input type="text" placeholder="Search..." className="search-bar" />
       </div>
 
-      <div className="cart">
-        <Link to="/" className="btn cart">🛒</Link>
+      <div className="addToCart">
+        <Link to="/cart" className="btn cart">🛒Add to Cart</Link>
       </div>
 
       {userInfo ? (
