@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 # from .products import products
 from .models import Products
-from .serializers import productSerializer, UserSerializer, UserSerializerWithToken
+from .models import Rentals
+from .serializers import productSerializer,rentalSerializer, UserSerializer, UserSerializerWithToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -38,6 +39,18 @@ def getProducts(request):
 def getProduct(request,pk):
     product=Products.objects.get(_id=pk)
     serializer= productSerializer(product, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getRentals(request):
+    rentals= Rentals.objects.all()
+    serializer= rentalSerializer(rentals, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])   
+def getRental(request,pk):
+    rental=Rentals.objects.get(_id=pk)
+    serializer= rentalSerializer(rental, many=False)
     return Response(serializer.data)
 
 

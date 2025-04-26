@@ -1,0 +1,173 @@
+/* Category.css - Vintage Theme */
+
+/* ============== BASE STYLES ============== */
+.vintage-category-page {
+  background-color: #f9f5eb;
+  min-height: 100vh;
+  font-family: 'Old Standard TT', serif;
+  color: #3a3226;
+}
+
+/* ============== SIDEBAR STYLES ============== */
+.vintage-sidebar {
+  background-color: #f8f4e9;
+  border: 1px solid #d4c9b1;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.vintage-sidebar-title {
+  color: #5a4a3a;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #8b5a2b;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.vintage-category-list {
+  border: none;
+}
+
+.vintage-category-item {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px dashed #d4c9b1 !important;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+  color: #5a4a3a;
+  text-decoration: none;
+}
+
+.vintage-category-item:hover {
+  background-color: rgba(139, 90, 43, 0.1);
+  transform: translateX(5px);
+}
+
+.vintage-category-item.active {
+  background-color: rgba(139, 90, 43, 0.2);
+  color: #3a3226;
+  font-weight: 600;
+}
+
+.vintage-category-name {
+  display: block;
+  position: relative;
+  padding-left: 15px;
+}
+
+.vintage-category-name::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #8b5a2b;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.vintage-category-item:hover .vintage-category-name::before {
+  opacity: 1;
+  left: -5px;
+}
+
+/* ============== PRODUCTS SECTION ============== */
+.vintage-products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #d4c9b1;
+}
+
+.vintage-products-title {
+  color: #5a4a3a;
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.vintage-products-count {
+  color: #8b5a2b;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.vintage-products-row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.vintage-product-col {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
+
+/* ============== LOADING STYLES ============== */
+.vintage-loading-container {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.vintage-loading-text {
+  color: #8b5a2b;
+  font-style: italic;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+/* ============== NO PRODUCTS STYLES ============== */
+.vintage-no-products {
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* ============== BUTTON STYLES ============== */
+.btn-vintage-outline {
+  background-color: transparent;
+  color: #5a4a3a;
+  border: 2px solid #8b5a2b;
+  border-radius: 0;
+  padding: 8px 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-vintage-outline:hover {
+  background-color: #8b5a2b;
+  color: #f9f5eb;
+  border-color: #5a4a3a;
+}
+
+/* ============== RESPONSIVE ADJUSTMENTS ============== */
+@media (max-width: 992px) {
+  .vintage-products-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .vintage-products-count {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vintage-sidebar {
+    margin-bottom: 30px;
+  }
+  
+  .vintage-products-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .vintage-product-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

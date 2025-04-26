@@ -1,117 +1,173 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import {Row,Col,Image,ListGroup,Button,Card,Container,Form,} from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Button,
+  Card,
+  Container,
+  Form,
+} from "react-bootstrap";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../actions/cartActions'; 
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { addToCart, removeFromCart } from '../actions/cartActions'; 
-import { useDispatch, useSelector } from 'react-redux';
+import Footer from '../components/Footer';
+import './Cart.css';
 
-function Cart(params) {
-    const {id} = useParams()
-    const navigate = useNavigate()
-    const location = useLocation()
+function Cart() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const productId = id
-    const qty = location.search ? Number(location.search.split("=")[1]) : 1
-    console.log(productId,qty)
-    const dispatch = useDispatch()
+  const productId = id;
+  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const dispatch = useDispatch();
 
-    const cart = useSelector((state) => state.cart)
-    const { cartItems } = cart
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
-
-    useEffect(() => {
-        if(productId){
-            dispatch(addToCart(productId,qty))
-        }
-    }, [dispatch, productId, qty])
-
-    const removeFromCartHandler = (id) => {
-        dispatch(removeFromCart(id))
+  useEffect(() => {
+    if(productId) {
+      dispatch(addToCart(productId, qty));
     }
+  }, [dispatch, productId, qty]);
 
-    const checkoutHandler = () => {
-        navigate("/login?redirect=shipping")
-    }
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
 
+  const checkoutHandler = () => {
+    navigate("/login?redirect=shipping");
+  };
 
   return (
-    <>
+    <div className="vintage-cart-page">
+      <Container className="py-4">
+        <Row>
+          {/* Cart Items Column */}
+          <Col md={8} className="mb-4">
+            <div className="vintage-cart-header">
+              <h1 className="vintage-cart-title">Your Vintage Collection</h1>
+              <div className="vintage-divider"></div>
+            </div>
 
-    <Row>
-        <Col md={8}>
-            <h1>Cart Items</h1>
             {cartItems.length === 0 ? (
-                <Message variant="info">
-                    Your cart is empty <Link to="/">Go Back</Link>
-                </Message>
+              <Message variant="info" className="vintage-empty-cart">
+                Your cart is empty <Link to="/" className="vintage-continue-shopping">Continue Exploring</Link>
+              </Message>
             ) : (
-                <Container>
-                <ListGroup variant="flush">
-                    {cartItems.map((item) => (
-                        <ListGroup.Item key={item.product}>
-                            <Row>
-                                <Col md={2}>
-                                    <Image src={item.image}  fluid rounded />
-                                </Col>
-                                <Col md={3}>
-                                    <Link to={`/product/${item.product}`}>{item.name}</Link>
-                                </Col>
-                                <Col md={2}>Rs {item.price}</Col>
-                                <Col md={2}>
-                                    <Form.Control
-                                        as="select"
-                                        value={item.qty}
-                                        onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
-                                    >
-                                        {[...Array(item.countInStock).keys()].map((x) => (
-                                            <option key={x + 1} value={x + 1}>
-                                                {x + 1}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Col>
-                                <Col md={2}>
-                                    <Button
-                                        type="button"
-                                        variant="light"
-                                        onClick={() => removeFromCartHandler(item.product)}
-                                    >
-                                        <i className="fas fa-trash"></i>
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
-                </Container>
-            )}
-        </Col>
+              <ListGroup variant="flush" className="vintage-cart-list">
+                {cartItems.map((item) => (
+                  <ListGroup.Item key={item.product} className="vintage-cart-item">
+                    <Row className="align-items-center">
+                      {/* Product Image */}
+                      <Col md={2} className="vintage-cart-image-col">
+                        <Image 
+                          src={item.image} 
+                          fluid 
+                          rounded 
+                          className="vintage-cart-image"
+                        />
+                      </Col>
 
-        <Col md={4}>
-            <Card className="mt-3">
-                <ListGroup variant="flush">
-                    <ListGroup.Item>
-                        <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2> 
-                        Rs {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                        <Button
-                            type="button"
-                            className="btn-block"
-                            disabled={cartItems.length === 0}
-                            onClick={checkoutHandler}
+                      {/* Product Name */}
+                      <Col md={3} className="vintage-cart-name-col">
+                        <Link 
+                          to={`/product/${item.product}`} 
+                          className="vintage-cart-product-name"
                         >
-                            Proceed To Checkout
+                          {item.name}
+                        </Link>
+                      </Col>
+
+                      {/* Product Price */}
+                      <Col md={2} className="vintage-cart-price-col">
+                        <span className="vintage-cart-price">Rs {item.price}</span>
+                      </Col>
+
+                      {/* Quantity Selector */}
+                      <Col md={2} className="vintage-cart-qty-col">
+                        <Form.Control
+                          as="select"
+                          value={item.qty}
+                          onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
+                          className="vintage-qty-selector"
+                        >
+                          {[...Array(item.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+
+                      {/* Remove Button */}
+                      <Col md={2} className="vintage-cart-remove-col">
+                        <Button
+                          type="button"
+                          variant="link"
+                          onClick={() => removeFromCartHandler(item.product)}
+                          className="vintage-remove-btn"
+                        >
+                          <i className="fas fa-trash vintage-trash-icon"></i>
                         </Button>
-                    </ListGroup.Item>
-                </ListGroup>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            )}
+          </Col>
+
+          {/* Order Summary Column */}
+          <Col md={4}>
+            <Card className="vintage-summary-card">
+              <ListGroup variant="flush">
+                <ListGroup.Item className="vintage-summary-header">
+                  <h2 className="vintage-summary-title">Order Summary</h2>
+                </ListGroup.Item>
+
+                <ListGroup.Item className="vintage-summary-item">
+                  <Row>
+                    <Col>Items:</Col>
+                    <Col className="text-right">
+                      {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item className="vintage-summary-item">
+                  <Row>
+                    <Col>Subtotal:</Col>
+                    <Col className="text-right">
+                      <span className="vintage-subtotal">
+                        Rs {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                      </span>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item className="vintage-checkout-btn-container">
+                  <Button
+                    type="button"
+                    className="vintage-checkout-btn"
+                    disabled={cartItems.length === 0}
+                    onClick={checkoutHandler}
+                  >
+                    Proceed To Checkout
+                  </Button>
+                </ListGroup.Item>
+              </ListGroup>
             </Card>
-        </Col>
-    </Row>
-    
-    </>
-  )
+          </Col>
+        </Row>
+      </Container>
+      <Footer />
+    </div>
+  );
 }
 
-export default Cart
+export default Cart;

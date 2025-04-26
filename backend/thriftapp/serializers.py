@@ -1,11 +1,17 @@
 from rest_framework import serializers
 from .models import Products
+from .models import Rentals
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class productSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
+        fields = '__all__'
+
+class rentalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rentals
         fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):

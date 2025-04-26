@@ -8,6 +8,8 @@ import Productscreen from "./pages/Productscreen";
 import Cart from "./pages/Cart";
 import Category from "./pages/Category";
 
+import Rentalpage from "./pages/Rental";
+import Rentalscreen from "./pages/Rentalscreen";
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart/:id" element={<Cart />} />
         <Route path="/product/:id" element={<Productscreen />} />
+        <Route path="/rental" element={<Rentalpage />} />
+        <Route path="/rental/:id" element={<Rentalscreen />} />
 
       </Routes>
     </Router>

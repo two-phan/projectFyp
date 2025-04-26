@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { listProducts } from "../actions/productsActions";
 import { useDispatch, useSelector } from "react-redux";
 import './Home.css';
+import Footer from "../components/Footer";
 
 
 function Home() {
@@ -57,8 +58,7 @@ function Home() {
         ) : error ? (
           <h3>{error}</h3>
         ) : (
-          <h4></h4>
-        )}
+          
 
         <Row>
           {products.map((product) => (
@@ -67,7 +67,10 @@ function Home() {
             </Col>
           ))}
         </Row>
+                )}
+
       </Container>
+      <Footer />
     </>
   );
 }

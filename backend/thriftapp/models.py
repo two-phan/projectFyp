@@ -14,6 +14,21 @@ class Products(models.Model):
     countInStock = models.IntegerField(null=True, blank=True, default=0)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
+    
 
     def __str__(self):
-        return self.productname
+        return self.productname 
+    
+class Rentals(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    rentalname = models.CharField(max_length=100)
+    image= models.ImageField(null=True, blank=True,)
+    rentalbrand = models.CharField(max_length=100, null=True, blank=True)
+    rentalcategory = models.CharField(max_length=100, null=True, blank=True)
+    rentaldescription = models.TextField(null=True, blank=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    _id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.rentalname
