@@ -13,26 +13,29 @@ function Category() {
   const { category } = useParams();
   const dispatch = useDispatch();
 
-  // Safely get categoryList state with default values
-  const categoryList = useSelector((state) => state.categoryList || {});
-  const { 
-    loading: loadingCategories = true, 
-    error: errorCategories = null, 
-    categories = [] 
-  } = categoryList;
+  // Define your static categories based on your Django model choices
+  const staticCategories = [
+    { slug: 'shirts', name: 'Shirts' },
+    { slug: 'jackets', name: 'Jackets' },
+    { slug: 'bags', name: 'Bags' },
+    { slug: 'shoes', name: 'Shoes' },
+    { slug: 'others', name: 'Others' },
+  ];
 
   // Safely get categoryProducts state with default values
   const categoryProducts = useSelector((state) => state.categoryProducts || {});
   const { 
-    loading: loadingProducts = true, 
-    error: errorProducts = null, 
+    loading: loadingProducts, 
+    error: errorProducts, 
     products = [] 
   } = categoryProducts;
 
   useEffect(() => {
-    dispatch(listCategories());
     dispatch(listCategoryProducts(category || 'all'));
   }, [dispatch, category]);
+
+  // Find the current category name
+  const currentCategory = staticCategories.find(c => c.slug === category)?.name || category;
 
   return (
     <div className="vintage-category-page">
@@ -42,36 +45,30 @@ function Category() {
           <Col md={3} className="mb-4">
             <div className="vintage-sidebar">
               <h3 className="vintage-sidebar-title">Shop By Category</h3>
-              {loadingCategories ? (
-                <Loader />
-              ) : errorCategories ? (
-                <Message variant="danger">{errorCategories}</Message>
-              ) : (
-                <ListGroup variant="flush" className="vintage-category-list">
+              <ListGroup variant="flush" className="vintage-category-list">
+                <ListGroup.Item
+                  as={Link}
+                  to="/category/all"
+                  action
+                  active={!category || category === "all"}
+                  className="vintage-category-item"
+                >
+                  <span className="vintage-category-name">All Categories</span>
+                </ListGroup.Item>
+                
+                {staticCategories.map((cat) => (
                   <ListGroup.Item
+                    key={cat.slug}
                     as={Link}
-                    to="/category/all"
+                    to={`/category/${cat.slug}`}
                     action
-                    active={!category || category === "all"}
+                    active={category === cat.slug}
                     className="vintage-category-item"
                   >
-                    <span className="vintage-category-name">All Categories</span>
+                    <span className="vintage-category-name">{cat.name}</span>
                   </ListGroup.Item>
-                  
-                  {categories.map((cat) => (
-                    <ListGroup.Item
-                      key={cat._id || cat}
-                      as={Link}
-                      to={`/category/${cat.slug || cat}`}
-                      action
-                      active={category === (cat.slug || cat)}
-                      className="vintage-category-item"
-                    >
-                      <span className="vintage-category-name">{cat.name || cat}</span>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
+                ))}
+              </ListGroup>
             </div>
           </Col>
 
@@ -81,7 +78,7 @@ function Category() {
               <h2 className="vintage-products-title">
                 {!category || category === "all" 
                   ? "All Vintage Treasures" 
-                  : categories.find(c => (c.slug || c) === category)?.name || category}
+                  : currentCategory}
               </h2>
               {!loadingProducts && (
                 <span className="vintage-products-count">

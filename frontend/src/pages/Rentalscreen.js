@@ -9,10 +9,12 @@ import {
   Card,
   Container,
   Form,
+  Spinner
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { listRentalDetails } from "../actions/rentalActions";
 import Footer from "../components/Footer";
+import "./Rentalscreen.css";
 
 function RentalScreen() {
   const navigate = useNavigate();
@@ -20,14 +22,8 @@ function RentalScreen() {
   const [duration, setDuration] = useState(1); 
   const dispatch = useDispatch();
   
-//   const rentalDetails = useSelector((state) => state.rentalDetails);
-//   const { error, loading, rental } = rentalDetails;
-//   const rentalDetails = useSelector((state) => state.rentalDetails || {});
-//   const { error = null, loading = false, rental = {} } = rentalDetails;
-const rentalDetails = useSelector((state) => state.rentalDetails);
-const { error = null, loading = false, rental = {} } = rentalDetails || {};
-
-
+  const rentalDetails = useSelector((state) => state.rentalDetails);
+  const { error = null, loading = false, rental = {} } = rentalDetails || {};
 
   useEffect(() => {
     dispatch(listRentalDetails(id));
@@ -38,73 +34,101 @@ const { error = null, loading = false, rental = {} } = rentalDetails || {};
   };
 
   return (
-    <>
-    <Container>
-      <div>
-        <Link to="/rental" className="btn btn-dark my-3">
-          Go Back
+    <div className="vintage-rental-screen">
+      <Container className="vintage-rental-container">
+        <Link to="/rental" className="btn btn-vintage-back">
+          &larr; Back to Rentals
         </Link>
 
         {loading ? (
-          <h2>Loading...</h2>
+          <div className="vintage-loading">
+            <Spinner animation="border" variant="secondary" />
+            <p className="mt-3 vintage-loading-text">Loading Vintage Treasures...</p>
+          </div>
         ) : error ? (
-          <h3>{error}</h3>
+          <div className="vintage-error">
+            <p>{error}</p>
+          </div>
         ) : (
           <Row>
             <Col md={4}>
-              <Image src={rental.image} alt={rental.rentalname} fluid />
+              <div className="vintage-rental-image-container">
+                <Image 
+                  src={rental.image} 
+                  alt={rental.rentalname} 
+                  fluid 
+                  className="vintage-rental-image"
+                />
+                <div className="vintage-image-frame"></div>
+              </div>
             </Col>
             
             <Col md={4}>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h3>{rental.rentalname}</h3>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  Brand: {rental.rentalbrand}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  Category: {rental.rentalcategory}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  Daily Rate: Rs {rental.price}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  Description: {rental.rentaldescription}
-                </ListGroup.Item>
-              </ListGroup>
+              <Card className="vintage-rental-details">
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="vintage-rental-list-item">
+                    <h3 className="vintage-rental-title">{rental.rentalname}</h3>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
+                    <p className="vintage-rental-label">Brand:</p>
+                    <p className="vintage-rental-value">{rental.rentalbrand}</p>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
+                    <p className="vintage-rental-label">Category:</p>
+                    <p className="vintage-rental-value">{rental.rentalcategory}</p>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
+                    <p className="vintage-rental-label">Daily Rate:</p>
+                    <p className="vintage-rental-value">Rs {rental.price}</p>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
+                    <p className="vintage-rental-label">Description:</p>
+                    <p className="vintage-rental-description">{rental.rentaldescription}</p>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
             </Col>
 
             <Col md={4}>
-              <Card>
+              <Card className="vintage-rental-card">
                 <ListGroup variant="flush">
-                  <ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
                     <Row>
-                      <Col>Daily Rate:</Col>
                       <Col>
-                        <strong>{rental.price} Rs</strong>
+                        <p className="vintage-summary-label">Daily Rate:</p>
+                      </Col>
+                      <Col className="text-right">
+                        <strong className="vintage-daily-rate">Rs {rental.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
                   
-                  <ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
                     <Row>
-                      <Col>Status:</Col>
                       <Col>
-                        {rental.isAvailable ? "Available" : "Not Available"}
+                        <p className="vintage-summary-label">Status:</p>
+                      </Col>
+                      <Col className="text-right">
+                        <span className={`vintage-availability ${rental.countInStock ? 'vintage-available' : 'vintage-unavailable'}`}>
+                          {rental.countInStock > 0 ? "Available" : "Unavailable"}
+                        </span>
                       </Col>
                     </Row>
                   </ListGroup.Item>
+                  
 
                   {rental.isAvailable && (
-                    <ListGroup.Item>
+                    <ListGroup.Item className="vintage-rental-list-item">
                       <Row>
-                        <Col>Rental Duration (days)</Col>
-                        <Col xs="auto" className="my-1">
+                        <Col>
+                          <p className="vintage-summary-label">Rental Duration (days)</p>
+                        </Col>
+                        <Col>
                           <Form.Control
                             as="select"
                             value={duration}
                             onChange={(e) => setDuration(e.target.value)}
+                            className="vintage-duration-select"
                           >
                             {[...Array(30).keys()].map((x) => (
                               <option key={x + 1} value={x + 1}>
@@ -117,14 +141,13 @@ const { error = null, loading = false, rental = {} } = rentalDetails || {};
                     </ListGroup.Item>
                   )}
 
-                  <ListGroup.Item>
+                  <ListGroup.Item className="vintage-rental-list-item">
                     <Button
-                      className="btn-block btn-primary"
-                      disabled={!rental.isAvailable}
-                      type="button"
+                      className="vintage-rent-now-btn"
+                      disabled={rental.countInStock === 0}
                       onClick={rentNowHandler}
                     >
-                      Rent Now
+                      {rental.countInStock > 0 ? "Rent Now" : "Unavailable"}
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
@@ -132,10 +155,9 @@ const { error = null, loading = false, rental = {} } = rentalDetails || {};
             </Col>
           </Row>
         )}
-      </div>
-    </Container>
-    <Footer />
-    </>
+      </Container>
+      <Footer className="vintage-footer" />
+    </div>
   );
 }
 
