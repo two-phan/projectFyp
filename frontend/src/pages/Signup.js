@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import { validPassword } from "../components/Validpass";
 import { signup } from "../actions/userActions";
 import Loader from "../components/Loader";
+import "./Form.css";
 
 function Signup() {
   const navigate = useNavigate();

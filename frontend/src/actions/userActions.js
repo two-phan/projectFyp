@@ -62,7 +62,7 @@ export const login = (email, password) => async (dispatch) => {
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
-            : error.message,
+            : "Invalid email or password",
       });
     }
   };
