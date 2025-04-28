@@ -17,6 +17,8 @@ urlpatterns = [
     path('users/',views.getUsers,name="getUsers"),
     path('users/signup/', views.signupUser, name='signup'),
     path('activate/<uidb64>/<token>/', views.ActivateAccountView.as_view(), name='activate'),
+    path('search/', views.searchProducts, name='searchproducts'),
+
 
     # path('categories/', views.getCategories, name="getCategories"),
     # path('products/category/<str:category>/', views.getProductsByCategory, name="getProductsByCategory"),

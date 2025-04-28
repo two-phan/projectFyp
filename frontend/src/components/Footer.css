@@ -1,10 +1,10 @@
 /* Vintage Footer Styles */
 .vintage-footer {
     color: #e0d6c2;
-    padding: 20px;
+    padding: 5px;
     font-family: 'Times New Roman', serif;
-    border-top: 8px double #8b5a2b;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+    border-top: 5px double #8b5a2b;
+    box-shadow: 0 -5px 15px rgba(229, 226, 226, 0.3);    
   }
   
   .footer-section {
@@ -28,7 +28,7 @@
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 20px;
-    color: #c9b8a8;
+    color: #807870;
   }
   
   .footer-links {
@@ -44,13 +44,13 @@
   
   .footer-links li::before {
     content: "»";
-    color: #8b5a2b;
+    color: #807870;
     position: absolute;
     left: 0;
   }
   
   .footer-links a {
-    color: #c9b8a8;
+    color: #807870;
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.95rem;
@@ -66,7 +66,7 @@
   .business-hours p {
     margin-bottom: 10px;
     font-size: 0.95rem;
-    color: #c9b8a8;
+    color: #807870;
     line-height: 1.5;
   }
   
@@ -79,7 +79,7 @@
   }
   
   .footer-social a {
-    color: #c9b8a8;
+    color: #807870;
     text-decoration: none;
     font-size: 0.9rem;
     transition: all 0.3s ease;
@@ -110,7 +110,7 @@
   }
   
   .copyright a {
-    color: #8b7d6b;
+    color: #807870;
     text-decoration: none;
     margin: 0 8px;
     transition: color 0.3s ease;
@@ -124,7 +124,7 @@
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .footer-section {
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       text-align: center;
     }
     

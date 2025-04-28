@@ -103,6 +103,17 @@
   opacity: 0.7;
 }
 
+.search-button {
+  background-color: #ffe4ca;
+  color: #f5e7d6;
+  border: 2px solid #8b5a2b;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+} 
+
 .action-buttons {
   display: flex;
   align-items: center;
@@ -123,9 +134,19 @@
   font-size: 0.9rem;
 }
 
-.cart {
-  background-color: #8b5a2b;
-  color: #f5e7d6;
+.btn-cart {
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  border: 2px solid lab(36.56% 8.75 3.32);
+  font-size: 0.9rem;
+  background-color: #f5e7d6;
+  color: #5c3a21;
+  text-decoration: none;
 }
 
 .cart:hover {

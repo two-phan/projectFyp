@@ -7,6 +7,7 @@ import { listProducts } from "../actions/productsActions";
 import { useDispatch, useSelector } from "react-redux";
 import './Home.css';
 import Footer from "../components/Footer";
+import image1 from "../pages/images/carousel1.jpg";
 
 
 function Home() {
@@ -27,7 +28,7 @@ function Home() {
           <Carousel.Item interval={3000}>
             <img
               className="d-block w-100"
-              src="https://img.freepik.com/free-vector/hand-drawn-thrift-store-illustration_23-2150066330.jpg?w=740&t=st=1673430183~exp=1673430783~hmac=8d779a655bbab4bfdad030f81febe39e393f9c8983db6f36a99e8181fe001f21"
+              src={image1}
               alt="First slide"
             />
             

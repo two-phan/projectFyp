@@ -1,10 +1,17 @@
-/* Product.css - Vintage Theme */
+/* ============== VARIABLES ============== */
+/* :root {
+  --parchment: #f8f4e9;
+  --light-border: #d4c9b1;
+  --dark-brown: #3a3226;
+  --medium-brown: #8b5a2b;
+  --muted-brown: #5a5248;
+} */
 
-/* ============== BASE STYLES ============== */
+/* ============== BASE CARD STYLES ============== */
 .vintage-product-card {
-  font-family: 'Old Standard TT', serif; /* Classic serif font */
-  background-color: #f8f4e9; /* Parchment-like background */
-  border: 1px solid #d4c9b1 !important; /* Light brown border */
+  font-family: 'Old Standard TT', serif;
+  background-color: var(--parchment);
+  border: 1px solid var(--light-border) !important;
   border-radius: 4px !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -17,48 +24,59 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* ============== CARD IMAGE ============== */
+/* ============== IMAGE STYLES ============== */
 .vintage-product-card .card-img {
   width: 100%;
   height: 200px;
-  object-fit: cover;
-  border-bottom: 3px double #8b5a2b; /* Decorative double border */
-  filter: sepia(20%) contrast(90%); /* Vintage photo effect */
+  object-fit: fill;
+  border-bottom: 2px double var(--medium-brown);
+  filter: sepia(20%) contrast(90%);
   transition: all 0.4s ease;
+  
 }
 
 .vintage-product-card:hover .card-img {
   filter: sepia(30%) contrast(100%);
 }
 
+/* Remove underline from image link */
+.vintage-product-card .img-link {
+  text-decoration: none !important;
+}
+
 /* ============== CARD BODY ============== */
 .vintage-product-card .card-body {
-  padding: 1.25rem;
-  background-color: #f8f4e9;
+  padding: 0.25rem;
+  background-color: var(--parchment);
 }
 
 /* ============== PRODUCT TITLE ============== */
 .vintage-product-card .card-title {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0rem;
+}
+
+/* Title link styles - removes underline */
+.vintage-product-card .product-title-link {
+  text-decoration: none !important;
+  color: var(--dark-brown);
 }
 
 .vintage-product-card .card-title h4 {
-  color: #3a3226; /* Dark brown */
   font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.5px;
-  text-decoration: none;
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 0px;
   transition: color 0.3s ease;
+  margin-top: 1rem;
 }
 
-.vintage-product-card .card-title a:hover {
-  color: #8b5a2b; /* Medium brown on hover */
-  text-decoration: none;
+.vintage-product-card .product-title-link:hover h4 {
+  color: var(--medium-brown);
 }
 
 /* ============== PRICE STYLING ============== */
 .vintage-product-card .card-text[as="h6"] {
-  color: #8b5a2b; /* Medium brown */
+  color: var(--medium-brown);
   font-weight: 600;
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
@@ -74,27 +92,26 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: #d4c9b1;
+  background-color: var(--light-border);
 }
 
 /* ============== DESCRIPTION ============== */
 .vintage-product-card .card-text[as="p"] {
-  color: #5a5248; /* Muted brown */
+  color: var(--muted-brown);
   font-size: 0.9rem;
   line-height: 1.5;
   margin-bottom: 0;
 }
 
 /* ============== VINTAGE DECORATIVE ELEMENTS ============== */
-/* Corner embellishments */
 .vintage-product-card::before,
 .vintage-product-card::after {
   content: '';
   position: absolute;
   width: 20px;
   height: 20px;
-  background-color: #f8f4e9;
-  border: 1px solid #d4c9b1;
+  background-color: var(--parchment);
+  border: 1px solid var(--light-border);
   z-index: 1;
 }
 

@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+from django.db.models import Q
 
 #for sending mail and generate token
 from django.template.loader import render_to_string
@@ -52,6 +53,19 @@ def getRental(request,pk):
     rental=Rentals.objects.get(_id=pk)
     serializer= rentalSerializer(rental, many=False)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def searchProducts(request):
+    query = request.query_params.get('q', '')
+    if query:
+        products = Products.objects.filter(  # Changed from Product to Products
+            Q(productname__icontains=query) |  # Changed name to productname
+            Q(productdescription__icontains=query) |  # Changed description to productdescription
+            Q(productcategory__icontains=query)  # Changed category to productcategory
+        )
+        serializer = productSerializer(products, many=True)
+        return Response(serializer.data)
+    return Response([])
 
 
     

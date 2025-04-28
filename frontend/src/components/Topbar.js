@@ -1,17 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/userActions";
+import { searchProducts } from "../actions/searchActions";
 import myImage from "../pages/images/thriftlogo.jpeg";
 
+
 function Navbar() {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logout());
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/search/${keyword}`);
+      dispatch(searchProducts(keyword));
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -25,22 +39,33 @@ function Navbar() {
 
         <ul className="nav-links">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/"><i class="fa-solid fa-house"></i>Home</Link>
           </li>
           <li>
-            <Link to="/category">Category</Link>
+            <Link to="/category"><i class="fa-solid fa-list"></i>Category</Link>
           </li>
           <li>
-            <Link to="/rental">Rental</Link>
+            <Link to="/rental"><i class="fa-solid fa-truck-ramp-box"></i>Rental</Link>
           </li>
         </ul>
       </div>
 
       <div className="navbar-right">
-        <input type="text" placeholder="Search..." className="search-bar" />
+        <form onSubmit={submitHandler} className="search-form">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="search-bar"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+          <button type="submit" className="search-button">
+          <i class="fa-solid fa-magnifying-glass"></i>            
+          </button>
+        </form>
         
         <div className="action-buttons">
-          <Link to="/cart" className="btn cart">
+          <Link to="/cart" className="btn-cart">
             🛒 Cart
           </Link>
 
@@ -54,10 +79,10 @@ function Navbar() {
           ) : (
             <>
               <Link to="/login" className="btn login">
-                Login
+              <i class="fa-solid fa-right-to-bracket"></i>Login
               </Link>
               <Link to="/signup" className="btn signup">
-                Signup
+              <i class="fa-solid fa-user-plus"></i>Signup
               </Link>
             </>
           )}

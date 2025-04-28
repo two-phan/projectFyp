@@ -8,6 +8,7 @@ import { cartReducer } from './reducers/cartReducers';
 import { categoryListReducer, categoryProductsReducer } from './reducers/categoryReducers';
 import { rentalListReducers } from './reducers/rentalReducers';
 import { rentalDetailsReducers } from './reducers/rentalReducers';
+import { searchReducer } from './reducers/searchReducers';
 
 
 const reducer = combineReducers({
@@ -20,6 +21,7 @@ const reducer = combineReducers({
     categoryProducts: categoryProductsReducer,
     rentalList: rentalListReducers,
     rentalDetails: rentalDetailsReducers,
+    productSearch: searchReducer,
 })
 const cartItemsFromStorage = localStorage.getItem("cartItems") ? 
 JSON.parse(localStorage.getItem("cartItems")) : []

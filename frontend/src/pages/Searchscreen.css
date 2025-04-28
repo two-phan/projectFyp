@@ -1,0 +1,82 @@
+/* Vintage Color Palette */
+:root {
+    --vintage-paper: #f5e9d9;
+    --old-book: #d2b48c;
+    --sepia: #704214;
+    --ink: #3a3226;
+    --rust: #b7410e;
+  }
+  
+  /* Main Container */
+  .search-screen.vintage-theme {
+    background-color: var(--vintage-paper);
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Times New Roman', serif;
+    background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+  }
+  
+  /* Title */
+  .search-title {
+    color: var(--sepia);
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(58, 50, 38, 0.3);
+    border-bottom: 2px dashed var(--old-book);
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Products Grid */
+  .vintage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  /* Individual Product Cards (assuming your Product component has a container) */
+  .vintage-grid .product-card {
+    background: white;
+    border: 1px solid var(--old-book);
+    box-shadow: 3px 3px 0px rgba(58, 50, 38, 0.1);
+    transition: all 0.3s ease;
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+  }
+  
+  .vintage-grid .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 5px 5px 0px rgba(183, 65, 14, 0.2);
+  }
+  
+  /* No Products Message */
+  .vintage-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--sepia);
+    font-size: 1.2rem;
+    font-style: italic;
+    padding: 2rem;
+    background: var(--vintage-paper);
+    border: 1px dashed var(--old-book);
+  }
+  
+  /* Loader Style (if you want vintage loader) */
+  .vintage-theme .loader {
+    border-top-color: var(--rust);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .vintage-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .search-title {
+      font-size: 1.8rem;
+    }
+  }

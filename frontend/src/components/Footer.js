@@ -13,7 +13,7 @@ function Footer() {
             <h5 className="footer-heading">About Thrifty Fifty</h5>
             <p className="footer-text">
               We brought you quality second-hand treasures with history and character. 
-              Thrifty Fifty is not just a store; it's a community of like-minded individuals who appreciate the beauty of pre-loved items.
+              Not just a store a community of like-minded individuals who appreciate the beauty of pre-loved items.
             </p>
             <div className="footer-social">
                 <Link to="/"><i className="fa-brands fa-facebook">Facebook</i></Link>
