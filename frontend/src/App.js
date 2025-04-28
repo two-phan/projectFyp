@@ -11,10 +11,11 @@ import Category from "./pages/Category";
 import Rentalpage from "./pages/Rental";
 import Rentalscreen from "./pages/Rentalscreen";
 import SearchScreen from "./pages/Searchscreen";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 
 
 function App() {
-  
   return (
     <Router>
       <Navbar />
@@ -29,9 +30,18 @@ function App() {
         <Route path="/rental" element={<Rentalpage />} />
         <Route path="/rental/:id" element={<Rentalscreen />} />
         <Route path="/search/:keyword" Component={SearchScreen} />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          }
+        />
       </Routes>
-    </Router> 
-  )
+    </Router>
+  );
 }
 
 export default App;

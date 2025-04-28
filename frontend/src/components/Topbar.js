@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/userActions";
 import { searchProducts } from "../actions/searchActions";
 import myImage from "../pages/images/thriftlogo.jpeg";
-
+import AdminDashboard from "../pages/AdminDashboard";
+import { NavDropdown } from "react-bootstrap";
 
 function Navbar() {
   const [keyword, setKeyword] = useState("");
@@ -39,15 +40,29 @@ function Navbar() {
 
         <ul className="nav-links">
           <li>
-            <Link to="/"><i class="fa-solid fa-house"></i>Home</Link>
+            <Link to="/">
+              <i class="fa-solid fa-house"></i>Home
+            </Link>
           </li>
           <li>
-            <Link to="/category"><i class="fa-solid fa-list"></i>Category</Link>
+            <Link to="/category">
+              <i class="fa-solid fa-list"></i>Category
+            </Link>
           </li>
           <li>
-            <Link to="/rental"><i class="fa-solid fa-truck-ramp-box"></i>Rental</Link>
+            <Link to="/rental">
+              <i class="fa-solid fa-truck-ramp-box"></i>Rental
+            </Link>
+          </li>
+          <li>
+          {userInfo && userInfo.isAdmin && (
+          <Link to="/admin/dashboard"><i class="fa-solid fa-user-tie"></i>Admin</Link>
+        )}
           </li>
         </ul>
+        
+
+        
       </div>
 
       <div className="navbar-right">
@@ -60,10 +75,10 @@ function Navbar() {
             onChange={(e) => setKeyword(e.target.value)}
           />
           <button type="submit" className="search-button">
-          <i class="fa-solid fa-magnifying-glass"></i>            
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </form>
-        
+
         <div className="action-buttons">
           <Link to="/cart" className="btn-cart">
             🛒 Cart
@@ -79,10 +94,10 @@ function Navbar() {
           ) : (
             <>
               <Link to="/login" className="btn login">
-              <i class="fa-solid fa-right-to-bracket"></i>Login
+                <i class="fa-solid fa-right-to-bracket"></i>Login
               </Link>
               <Link to="/signup" className="btn signup">
-              <i class="fa-solid fa-user-plus"></i>Signup
+                <i class="fa-solid fa-user-plus"></i>Signup
               </Link>
             </>
           )}

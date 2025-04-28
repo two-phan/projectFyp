@@ -25,9 +25,14 @@ function Login() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      console.log("User Info:", userInfo); // Add this line
+      if (userInfo.isAdmin) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate(redirect);
+      }
     }
-  }, [userInfo, redirect]);
+  }, [userInfo, redirect, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

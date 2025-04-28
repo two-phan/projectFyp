@@ -18,6 +18,7 @@ urlpatterns = [
     path('users/signup/', views.signupUser, name='signup'),
     path('activate/<uidb64>/<token>/', views.ActivateAccountView.as_view(), name='activate'),
     path('search/', views.searchProducts, name='searchproducts'),
+    path('admin/stats/', views.admin_stats, name='admin-stats'),
 
 
     # path('categories/', views.getCategories, name="getCategories"),

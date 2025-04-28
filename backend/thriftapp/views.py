@@ -25,6 +25,17 @@ from smtplib import SMTPAuthenticationError
 
 
 # Create your views here.
+# thriftapp/views.py
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def admin_stats(request):
+    stats = {
+        'users': User.objects.count(),
+        'products': Products.objects.count(),
+        'activeRentals': Rentals.objects.filter(status='active').count(),
+        'pendingOrders': 0,  # Add your order model here
+    }
+    return Response(stats)
 
 @api_view(['GET'])   
 def getRoutes(request):
