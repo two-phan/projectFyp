@@ -6,7 +6,6 @@ import { logout } from "../actions/userActions";
 import { searchProducts } from "../actions/searchActions";
 import myImage from "../pages/images/thriftlogo.jpeg";
 import AdminDashboard from "../pages/AdminDashboard";
-import { NavDropdown } from "react-bootstrap";
 
 function Navbar() {
   const [keyword, setKeyword] = useState("");

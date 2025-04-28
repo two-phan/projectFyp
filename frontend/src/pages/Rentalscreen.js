@@ -36,8 +36,7 @@ function RentalScreen() {
   return (
     <div className="vintage-rental-screen">
       <Container className="vintage-rental-container">
-        <Link to="/rental" className="btn btn-vintage-back">
-          &larr; Back to Rentals
+        <Link to="/rental" className="btn btn-vintage-back">Go Back
         </Link>
 
         {loading ? (

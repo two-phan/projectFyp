@@ -4,29 +4,30 @@ import { Container, Row, Col, Card, Table, Button, Alert } from 'react-bootstrap
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import './AdminDashboard.css'
 
 function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [error, setError] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        const { data } = await axios.get('/api/admin/stats', config);
-        setStats(data);
-      } catch (err) {
-        setError(err.response?.data?.message || err.message);
-      }
-    };
+//   useEffect(() => {
+//     const fetchStats = async () => {
+//       try {
+//         const config = {
+//           headers: {
+//             Authorization: `Bearer ${userInfo.token}`,
+//           },
+//         };
+//         const { data } = await axios.get('/api/admin/stats', config);
+//         setStats(data);
+//       } catch (err) {
+//         setError(err.response?.data?.message || err.message);
+//       }
+//     };
 
-    fetchStats();
-  }, [userInfo]);
+//     fetchStats();
+//   }, [userInfo]);
 
   return (
     <Container fluid>
