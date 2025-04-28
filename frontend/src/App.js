@@ -13,7 +13,7 @@ import Rentalscreen from "./pages/Rentalscreen";
 import SearchScreen from "./pages/Searchscreen";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
-
+import Rent from "./pages/Rent";
 
 function App() {
   return (
@@ -30,6 +30,8 @@ function App() {
         <Route path="/rental" element={<Rentalpage />} />
         <Route path="/rental/:id" element={<Rentalscreen />} />
         <Route path="/search/:keyword" Component={SearchScreen} />
+        <Route path="/rent/:id" element={<Rent />} />
+        <Route path="/rent" element={<Rent />} />
 
         <Route
           path="/admin/dashboard"

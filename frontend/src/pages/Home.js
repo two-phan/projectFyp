@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import './Home.css';
 import Footer from "../components/Footer";
 import image1 from "../pages/images/carousel1.jpg";
+import image2 from "../pages/images/carousel2.jpg";
+import image3 from "../pages/images/carousel3.jpg";
+
 
 
 function Home() {
@@ -36,7 +39,7 @@ function Home() {
           <Carousel.Item interval={3000}>
             <img
               className="d-block w-100"
-              src="https://img.freepik.com/premium-vector/hand-drawn-thrift-store-illustration_23-2150066313.jpg"
+              src={image2}
               alt="Second slide"
             />
          
@@ -44,7 +47,7 @@ function Home() {
           <Carousel.Item interval={3000}>
             <img
               className="d-block w-100"
-              src="https://tse2.mm.bing.net/th/id/OIP.6Phkd3oouTo8skPPGrwBLwHaE8?w=826&h=551&rs=1&pid=ImgDetMain"
+              src={image3}
               alt="Third slide"
             />
            

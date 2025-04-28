@@ -1,0 +1,114 @@
+.vintage-rent-page {
+    background-color: #f9f5eb;
+    min-height: 100vh;
+  }
+  
+  .vintage-rent-header {
+    margin-bottom: 2rem;
+  }
+  
+  .vintage-rent-title {
+    color: #5a4a3a;
+    font-family: 'Old Standard TT', serif;
+    font-size: 2rem;
+  }
+  
+  .vintage-divider {
+    height: 2px;
+    background-color: #d4c9b1;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  .vintage-rent-list {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .vintage-rent-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e8d9c5;
+  }
+  
+  .vintage-rent-image {
+    border: 1px solid #d4c9b1;
+    border-radius: 4px;
+  }
+  
+  .vintage-rent-product-name {
+    color: #5a4a3a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .vintage-rent-product-name:hover {
+    color: #8b5a2b;
+    text-decoration: underline;
+  }
+  
+  .vintage-rent-price {
+    font-weight: 600;
+    color: #8b5a2b;
+  }
+  
+  .vintage-rent-total {
+    font-weight: 700;
+    color: #5a4a3a;
+  }
+  
+  .vintage-duration-selector {
+    border: 1px solid #d4c9b1;
+    border-radius: 4px;
+  }
+  
+  .vintage-summary-card {
+    border: 1px solid #d4c9b1;
+    border-radius: 8px;
+  }
+  
+  .vintage-summary-header {
+    background-color: #f5efe7;
+    padding: 1rem;
+  }
+  
+  .vintage-summary-title {
+    color: #5a4a3a;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .vintage-summary-item {
+    padding: 1rem;
+  }
+  
+  .vintage-checkout-btn {
+    background-color: #8b5a2b;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    width: 100%;
+    font-weight: 600;
+  }
+  
+  .vintage-checkout-btn:hover {
+    background-color: #5a4a3a;
+  }
+  
+  .vintage-checkout-btn:disabled {
+    background-color: #cccccc;
+  }
+  
+  .vintage-empty-rent {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .vintage-continue-browsing {
+    color: #8b5a2b;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .vintage-continue-browsing:hover {
+    text-decoration: underline;
+  }

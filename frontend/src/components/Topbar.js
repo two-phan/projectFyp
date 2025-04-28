@@ -79,9 +79,13 @@ function Navbar() {
         </form>
 
         <div className="action-buttons">
+          <Link to="/rent" className="btn-cart">
+            🛒 Rent
+          </Link>
           <Link to="/cart" className="btn-cart">
             🛒 Cart
           </Link>
+          
 
           {userInfo ? (
             <div className="user-info">

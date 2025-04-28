@@ -32,11 +32,12 @@ function RentalScreen() {
   const rentNowHandler = () => {
     navigate(`/rent/${id}?duration=${duration}`);
   };
+  
 
   return (
     <div className="vintage-rental-screen">
       <Container className="vintage-rental-container">
-        <Link to="/rental" className="btn btn-vintage-back">Go Back
+        <Link to="/rental" className="btn btn-vintage-back">&larr;Back to Rental
         </Link>
 
         {loading ? (

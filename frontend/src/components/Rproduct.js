@@ -1,11 +1,12 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import './Product.css';
+import './Rproduct.css';
 
 function Rental({rental}) {
     return (
-        <Card className="my-3 p-3 rounded">
+        <Card className="vintage-rental-card">
+          <span className="vintage-rental-badge">RENTAL</span>
           <Link to={`/rental/${rental._id}`}>
             <Card.Img src={rental.image} />
           </Link>

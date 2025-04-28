@@ -39,13 +39,13 @@ class Rentals(models.Model):
     image= models.ImageField(null=True, blank=True,)
     rentalbrand = models.CharField(max_length=100, null=True, blank=True)
     rentalcategory = [
-        ('Shirts', 'Shirts'),
-        ('Pants', 'Pants'),
+        ('costumes', 'Costumes'),
+        ('props', 'props'),
         ('Jackets', 'Jackets'),
-        ('Bags', 'Bags'),
         ('Shoes', 'Shoes'),
         ('Womens Wear', 'Womens Wear'),
-        ('Others', 'Others'),
+        ('Others', 'Other Rentals'),
+           
     ]
     rentalcategory= models.CharField(
         max_length=20,
