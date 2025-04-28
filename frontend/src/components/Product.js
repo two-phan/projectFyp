@@ -17,7 +17,7 @@ function Product({product}) {
               </Card.Title>
             </Link>
           </Card.Body>
-          <Card.Text as="h6">Rs: {product.price}</Card.Text>
+          <Card.Text as="h5">Rs: {product.price}</Card.Text>
           <Card.Text as="p">{product.productdescription}</Card.Text>
         </Card>
       );

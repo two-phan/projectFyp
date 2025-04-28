@@ -14,6 +14,7 @@ import SearchScreen from "./pages/Searchscreen";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import Rent from "./pages/Rent";
+import ContactPage from "./pages/ContactUs";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route path="/search/:keyword" Component={SearchScreen} />
         <Route path="/rent/:id" element={<Rent />} />
         <Route path="/rent" element={<Rent />} />
-
+        <Route path="/contact" element={<ContactPage />} />
         <Route
           path="/admin/dashboard"
           element={

@@ -1,171 +1,161 @@
-/* Rental.css - Vintage Theme Card */
+/* ============== VINTAGE RENTAL CARD ============== */
+.vintage-rental-card {
+  font-family: 'Old Standard TT', serif;
+  background-color: var(--parchment);
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(58, 50, 38, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  position: relative;
+}
 
-/* ============== VARIABLES ============== */
-:root {
-    --parchment: #f8f4e9;
-    --light-border: #d4c9b1;
-    --dark-brown: #3a3226;
-    --medium-brown: #8b5a2b;
-    --muted-brown: #5a5248;
-  }
-  
-  /* ============== BASE CARD STYLES ============== */
-  .vintage-rental-card {
-    font-family: 'Old Standard TT', serif;
-    background-color: var(--parchment);
-    border: 1px solid var(--light-border) !important;
-    border-radius: 4px !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    position: relative;
-    height: 100%;
-    margin-bottom: 1.5rem;
-  }
-  
-  .vintage-rental-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* ============== IMAGE STYLES ============== */
+.vintage-rental-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(58, 50, 38, 0.15);
+}
+
+/* ============== RENTAL BADGE ============== */
+.vintage-rental-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--gold-accent);
+  color: var(--dark-brown);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 3px;
+  z-index: 2;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ============== IMAGE STYLES ============== */
+.vintage-rental-card .card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: fill;
+  border-bottom: 2px double var(--medium-brown);
+  transition: all 0.4s ease;
+}
+
+.vintage-rental-card:hover .card-img {
+  opacity: 0.9;
+}
+
+/* ============== CARD BODY ============== */
+.vintage-rental-card .card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* ============== RENTAL TITLE ============== */
+.vintage-rental-card .card-title {
+  margin: 0;
+}
+
+.vintage-rental-card .card-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--dark-brown);
+  text-align: center;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.vintage-rental-card a:hover .card-title h4 {
+  color: var(--medium-brown);
+  text-decoration: none;
+}
+
+/* ============== PRICE STYLING ============== */
+.vintage-rental-card .card-text {
+  color: var(--medium-brown);
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  letter-spacing: 0.5px;
+  font-family: 'Old Standard TT', serif;
+}
+
+/* ============== DESCRIPTION ============== */
+.vintage-rental-card p.card-text {
+  color: var(--muted-brown);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+  text-align: left;
+  flex-grow: 1;
+  padding: 0 1.25rem 1.25rem;
+}
+
+/* ============== DECORATIVE ELEMENTS ============== */
+.vintage-rental-card::before,
+.vintage-rental-card::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--parchment);
+  border: 1px solid var(--light-border);
+  z-index: 1;
+}
+
+.vintage-rental-card::before {
+  top: -10px;
+  left: -10px;
+  transform: rotate(45deg);
+}
+
+.vintage-rental-card::after {
+  bottom: -10px;
+  right: -10px;
+  transform: rotate(45deg);
+}
+
+/* ============== RESPONSIVE ADJUSTMENTS ============== */
+@media (max-width: 768px) {
   .vintage-rental-card .card-img {
-    width: 100%;
-    height: 200px;
-    object-fit: fill;
-    border-bottom: 2px double var(--medium-brown);
-    filter: sepia(20%) contrast(90%);
-    transition: all 0.4s ease;
-  }
-  
-  .vintage-rental-card:hover .card-img {
-    filter: sepia(30%) contrast(100%);
-  }
-  
-  /* Remove underline from image link */
-  .vintage-rental-card .img-link {
-    text-decoration: none !important;
-  }
-  
-  /* ============== CARD BODY ============== */
-  .vintage-rental-card .card-body {
-    padding: 1rem;
-    background-color: var(--parchment);
-  }
-  
-  /* ============== RENTAL TITLE ============== */
-  .vintage-rental-card .card-title {
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Title link styles - removes underline */
-  .vintage-rental-card .rental-title-link {
-    text-decoration: none !important;
-    color: var(--dark-brown);
+    height: 180px;
   }
   
   .vintage-rental-card .card-title h4 {
-    font-weight: 700;
-    text-align: center;
-    font-size: 1.5rem;
-    letter-spacing: 0px;
-    transition: color 0.3s ease;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .vintage-rental-card .rental-title-link:hover h4 {
-    color: var(--medium-brown);
-  }
-  
-  /* ============== PRICE STYLING ============== */
-  .vintage-rental-card .card-text[as="h6"] {
-    color: var(--medium-brown);
-    font-weight: 600;
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    width: 100%;
   }
   
-  /* Price decorative underline */
-  .vintage-rental-card .card-text[as="h6"]::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 25%;
-    width: 50%;
-    height: 1px;
-    background-color: var(--light-border);
+  .vintage-rental-card .card-text[as="h6"] {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .vintage-rental-card {
+    margin-bottom: 1rem;
   }
   
-  /* ============== DESCRIPTION ============== */
+  .vintage-rental-card .card-img {
+    height: 160px;
+  }
+  
+  .vintage-rental-card .card-title h4 {
+    font-size: 1rem;
+  }
+  
+  .vintage-rental-card .card-text[as="h6"] {
+    font-size: 1.1rem;
+  }
+  
   .vintage-rental-card .card-text[as="p"] {
-    color: var(--muted-brown);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 0;
-    text-align: center;
-    padding: 0 0.5rem;
+    font-size: 0.8rem;
   }
-  
-  /* ============== VINTAGE DECORATIVE ELEMENTS ============== */
-  .vintage-rental-card::before,
-  .vintage-rental-card::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: var(--parchment);
-    border: 1px solid var(--light-border);
-    z-index: 1;
-  }
-  
-  .vintage-rental-card::before {
-    top: -10px;
-    left: -10px;
-    transform: rotate(45deg);
-  }
-  
-  .vintage-rental-card::after {
-    bottom: -10px;
-    right: -10px;
-    transform: rotate(45deg);
-  }
-  
-  /* ============== RENTAL-SPECIFIC BADGE ============== */
-  .vintage-rental-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(139, 90, 43, 0.9);
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    z-index: 2;
-  }
-  
-  /* ============== RESPONSIVE ADJUSTMENTS ============== */
-  @media (max-width: 768px) {
-    .vintage-rental-card .card-img {
-      height: 160px;
-    }
-    
-    .vintage-rental-card .card-title h4 {
-      font-size: 1.3rem;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .vintage-rental-card .card-title h4 {
-      font-size: 1.1rem;
-    }
-    
-    .vintage-rental-card .card-text[as="h6"] {
-      font-size: 1rem;
-    }
-  }
+}

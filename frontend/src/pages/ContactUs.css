@@ -1,0 +1,87 @@
+.vintage-contact-page {
+    background-color: #f9f5f0;
+    min-height: 100vh;
+  }
+  
+  .vintage-contact-title {
+    color: #5a4a3a;
+    font-family: 'Old Standard TT', serif;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .vintage-contact-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: #8b5a2b;
+  }
+  
+  .vintage-contact-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e8d9c5;
+  }
+  
+  .vintage-contact-form .form-label {
+    color: #5a4a3a;
+    font-weight: 600;
+  }
+  
+  .vintage-contact-form .form-control,
+  .vintage-contact-form .form-select {
+    border: 1px solid #d4c9b1;
+    border-radius: 4px;
+    padding: 10px 15px;
+  }
+  
+  .vintage-contact-form .form-control:focus,
+  .vintage-contact-form .form-select:focus {
+    border-color: #8b5a2b;
+    box-shadow: 0 0 0 0.25rem rgba(139, 90, 43, 0.25);
+  }
+  
+  .vintage-submit-btn {
+    background-color: #8b5a2b;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+  
+  .vintage-submit-btn:hover {
+    background-color: #5a4a3a;
+  }
+  
+  .vintage-contact-text {
+    color: #5a4a3a;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+  
+  .vintage-contact-btn {
+    padding: 10px 25px;
+    border: 2px solid #8b5a2b;
+    color: #8b5a2b;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .vintage-contact-btn:hover {
+    background-color: #8b5a2b;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .vintage-contact-form {
+      padding: 20px;
+    }
+  }

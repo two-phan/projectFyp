@@ -54,6 +54,11 @@ function Navbar() {
             </Link>
           </li>
           <li>
+            <Link to="/contact">
+            <i class="fa-solid fa-address-book"></i>Contact Us
+            </Link>
+          </li>
+          <li>
           {userInfo && userInfo.isAdmin && (
           <Link to="/admin/dashboard"><i class="fa-solid fa-user-tie"></i>Admin</Link>
         )}
