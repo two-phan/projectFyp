@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import './Product.css';
+import Rating from './Rating';
 
 
 function Product({product}) {
@@ -18,7 +19,11 @@ function Product({product}) {
             </Link>
           </Card.Body>
           <Card.Text as="h5">Rs: {product.price}</Card.Text>
+          <Rating 
+          value={product.rating}
+          color={"#f8e825"} />
           <Card.Text as="p">{product.productdescription}</Card.Text>
+          
         </Card>
       );
     

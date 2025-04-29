@@ -10,12 +10,13 @@ import {
   Container,
   Form,
   Spinner,
-  Alert
+  Alert,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { listProductDetails } from "../actions/productsActions";
 import Footer from "../components/Footer";
 import "./Productscreen.css";
+import Rating from "../components/Rating";
 
 function ProductScreen() {
   const navigate = useNavigate();
@@ -44,7 +45,9 @@ function ProductScreen() {
         {loading ? (
           <div className="text-center py-5">
             <Spinner animation="border" variant="secondary" />
-            <p className="mt-3 vintage-loading-text">Loading Vintage Treasures...</p>
+            <p className="mt-3 vintage-loading-text">
+              Loading Vintage Treasures...
+            </p>
           </div>
         ) : error ? (
           <Alert variant="danger" className="vintage-alert">
@@ -55,10 +58,10 @@ function ProductScreen() {
             {/* Product Image Column */}
             <Col md={5} className="mb-4">
               <div className="vintage-image-container">
-                <Image 
-                  src={product.image} 
-                  alt={product.productname} 
-                  fluid 
+                <Image
+                  src={product.image}
+                  alt={product.productname}
+                  fluid
                   className="vintage-product-image"
                 />
                 <div className="vintage-image-frame"></div>
@@ -70,19 +73,33 @@ function ProductScreen() {
               <Card className="vintage-details-card">
                 <ListGroup variant="flush">
                   <ListGroup.Item className="vintage-list-item">
-                    <h2 className="vintage-product-title">{product.productname}</h2>
+                    <h2 className="vintage-product-title">
+                      {product.productname}
+                    </h2>
                   </ListGroup.Item>
                   <ListGroup.Item className="vintage-list-item">
                     <p className="vintage-detail-label">Brand:</p>
-                    <p className="vintage-detail-value">{product.productbrand}</p>
+                    <p className="vintage-detail-value">
+                      {product.productbrand}
+                    </p>
                   </ListGroup.Item>
                   <ListGroup.Item className="vintage-list-item">
                     <p className="vintage-detail-label">Category:</p>
-                    <p className="vintage-detail-value">{product.productcategory}</p>
+                    <p className="vintage-detail-value">
+                      {product.productcategory}
+                    </p>
                   </ListGroup.Item>
                   <ListGroup.Item className="vintage-list-item">
                     <p className="vintage-detail-label">Description:</p>
-                    <p className="vintage-product-description">{product.productdescription}</p>
+                    <p className="vintage-product-description">
+                      {product.productdescription}
+                    </p>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="vintage-list-rating">
+                    <p className="vintage-detail-label">
+                      Rating:<Rating value={product.rating} color={"#f8e825"} />  
+                    </p>
+                    
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
@@ -98,7 +115,9 @@ function ProductScreen() {
                         <p className="vintage-price-label">Price:</p>
                       </Col>
                       <Col className="text-right">
-                        <strong className="vintage-price">Rs {product.price}</strong>
+                        <strong className="vintage-price">
+                          Rs {product.price}
+                        </strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -108,8 +127,16 @@ function ProductScreen() {
                         <p className="vintage-stock-label">Status:</p>
                       </Col>
                       <Col className="text-right">
-                        <span className={`vintage-stock-status ${product.countInStock > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                          {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                        <span
+                          className={`vintage-stock-status ${
+                            product.countInStock > 0
+                              ? "in-stock"
+                              : "out-of-stock"
+                          }`}
+                        >
+                          {product.countInStock > 0
+                            ? "In Stock"
+                            : "Out of Stock"}
                         </span>
                       </Col>
                     </Row>
@@ -128,11 +155,13 @@ function ProductScreen() {
                             onChange={(e) => setQty(e.target.value)}
                             className="vintage-qty-select"
                           >
-                            {[...Array(product.countInStock).keys()].map((x) => (
-                              <option key={x + 1} value={x + 1}>
-                                {x + 1}
-                              </option>
-                            ))}
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
                           </Form.Control>
                         </Col>
                       </Row>
@@ -145,7 +174,9 @@ function ProductScreen() {
                       disabled={product.countInStock === 0}
                       onClick={addToCartHandler}
                     >
-                      {product.countInStock > 0 ? "Add to Cart" : "Out of Stock"}
+                      {product.countInStock > 0
+                        ? "Add to Cart"
+                        : "Out of Stock"}
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
