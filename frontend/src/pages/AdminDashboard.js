@@ -51,6 +51,9 @@ function AdminDashboard() {
             <Link to="/admin/rentals" className="nav-link text-white mb-2">
               Rentals
             </Link>
+            <Link to="/admin/rentals" className="nav-link text-white mb-2">
+              Contact Us
+            </Link>
           </nav>
         </Col>
 
@@ -114,9 +117,9 @@ function AdminDashboard() {
                 <tbody>
                   {/* You would map through recent activities here */}
                   <tr>
-                    <td>2023-05-15</td>
+                    <td>2025-04-29</td>
                     <td>New product added</td>
-                    <td>admin@example.com</td>
+                    <td>gurungtuphan999@gmail.com</td>
                   </tr>
                 </tbody>
               </Table>
