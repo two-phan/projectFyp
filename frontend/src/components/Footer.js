@@ -39,7 +39,7 @@ function Footer() {
 
           {/* Contact Info */}
           <Col md={4} className="footer-section">
-            <h5 className="footer-heading">Visit Us</h5>
+            <h5 className="footer-heading">Contact Us</h5>
             <address className="footer-address">
               <p>Pokhara ACD complex</p>
               <p>Phone: (123) 456-7890</p>
