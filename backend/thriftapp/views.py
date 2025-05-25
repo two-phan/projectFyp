@@ -2,8 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 # from .products import products
-from .models import Products
-from .models import Rentals
+from .models import User, Products, Rentals
 from .serializers import productSerializer,rentalSerializer, UserSerializer, UserSerializerWithToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -26,16 +25,44 @@ from smtplib import SMTPAuthenticationError
 
 # Create your views here.
 # thriftapp/views.py
+
+
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def admin_stats(request):
-    stats = {
-        'users': User.objects.count(),
-        'products': Products.objects.count(),
-        'activeRentals': Rentals.objects.filter(status='active').count(),
-        'pendingOrders': 0,  # Add your order model here
-    }
-    return Response(stats)
+    users = User.objects.count()
+    products = Products.objects.count()
+    active_rentals = Rentals.objects.count() 
+    pending_orders = Rentals.objects.filter(status='pending').count()  # Adjust to your model
+
+    return Response({
+        'users': users,
+        'products': products,
+        'activeRentals': active_rentals,
+        'pendingOrders': pending_orders,
+    })
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def all_users(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def all_products(request):
+    products = Products.objects.all()
+    serializer = productSerializer(products, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def all_rentals(request):
+    rentals = Rentals.objects.all()
+    serializer = rentalSerializer(rentals, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])   
 def getRoutes(request):
@@ -78,16 +105,6 @@ def searchProducts(request):
         return Response(serializer.data)
     return Response([])
 
-
-    
-# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-#     def validate(self, attrs):
-#         data = super().validate(attrs)
-#         serializer = UserSerializerWithToken(self.user).data
-#         for k, v in serializer.items():
-#             data[k] = v
-
-#         return data
     
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -179,3 +196,13 @@ class ActivateAccountView(View):
                 return render(request, 'activatesuccess.html')
         else:   
                 return render(request, 'activatefail.html')
+        
+@api_view(['GET'])
+def getProductsByCategory(request, category_slug):
+    try:
+        # CHANGE THIS LINE: from 'category' to 'productcategory'
+        products = Products.objects.filter(productcategory__iexact=category_slug)
+        serializer = productSerializer(products, many=True)
+        return Response(serializer.data)
+    except Products.DoesNotExist:
+        return Response({'detail': 'Category not found or no products in category'}, status=404)

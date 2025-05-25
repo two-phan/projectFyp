@@ -3,6 +3,7 @@ from .models import Products
 from .models import Rentals
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
+from .models import User
 
 class productSerializer(serializers.ModelSerializer):
     class Meta:

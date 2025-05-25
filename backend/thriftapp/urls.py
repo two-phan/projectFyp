@@ -18,10 +18,15 @@ urlpatterns = [
     path('users/signup/', views.signupUser, name='signup'),
     path('activate/<uidb64>/<token>/', views.ActivateAccountView.as_view(), name='activate'),
     path('search/', views.searchProducts, name='searchproducts'),
-    path('admin/stats/', views.admin_stats, name='admin-stats'),
-
-
+    # path('admin/stats/', views.admin_stats, name='admin-stats'),
+    path('admin/stats/', views.admin_stats),
+    path('admin/users/', views.all_users),
+    path('admin/products/', views.all_products),
+    path('admin/rentals/', views.all_rentals),
     # path('categories/', views.getCategories, name="getCategories"),
-    # path('products/category/<str:category>/', views.getProductsByCategory, name="getProductsByCategory"),
-]
+    path('products/category/<str:category_slug>/', views.getProductsByCategory, name="getProductsByCategory"),]
+
+
+
+
 

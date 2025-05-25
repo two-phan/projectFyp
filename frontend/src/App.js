@@ -42,6 +42,9 @@ function App() {
             </ProtectedAdminRoute>
           }
         />
+        <Route path="/category/:category" element={<Category />} />
+        <Route path="/category/all" element={<Category />} />
+        <Route path="/" element={<Category />} />
       </Routes>
     </Router>
   );
