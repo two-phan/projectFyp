@@ -8,7 +8,7 @@ function Footer() {
     <footer className="vintage-footer">
       <Container>
         <Row>
-          {/* About Section */}
+          
           <Col md={4} className="footer-section">
             <h5 className="footer-heading">About Thrifty Fifty</h5>
             <p className="footer-text">
@@ -26,7 +26,6 @@ function Footer() {
             </div>
           </Col>
 
-          {/* Quick Links */}
           <Col md={4} className="footer-section">
             <h5 className="footer-heading">Quick Links</h5>
             <ul className="footer-links">
@@ -37,22 +36,18 @@ function Footer() {
             </ul>
           </Col>
 
-          {/* Contact Info */}
+    
           <Col md={4} className="footer-section">
             <h5 className="footer-heading">Contact Us</h5>
             <address className="footer-address">
-              <p>Pokhara ACD complex</p>
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: hello@thriftyfifty.com</p>
+              <p>Contact us at the below number and email</p>
+              <p>Phone: 9801234567</p>
+              <p>Email: thriftyfifty@gmai.com</p>
             </address>
-            <div className="business-hours">
-              <p>Mon-Fri: 10am - 7pm</p>
-              <p>Sat-Sun: 9am - 8pm</p>
-            </div>
           </Col>
         </Row>
 
-        {/* Copyright */}
+     
         <Row>
           <Col className="text-center copyright">
             <p>&copy; {new Date().getFullYear()} Thrifty Store. All Rights Reserved.</p>

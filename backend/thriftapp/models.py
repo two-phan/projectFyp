@@ -49,7 +49,7 @@ class Rentals(models.Model):
     ]
     rentalcategory= models.CharField(
         max_length=20,
-        default='shirts',
+        default='costumes',
         choices= rentalcategory,
         blank=True,
     )
@@ -111,4 +111,26 @@ class RentalOrder(models.Model):
 
     def __str__(self):
         return f"Rental {self._id} - {self.rental.rentalname}"
+
+
+
+class ContactInquiry(models.Model):
+    INQUIRY_CHOICES = [
+        ('feedback', 'General Feedback/Question'),
+        ('sell', 'Selling My Clothes/Items'),
+        ('rental', 'Rental Inquiry'),
+        ('other', 'Other'),
+    ]
+
+    name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)
+    inquiry_type = models.CharField(max_length=20, choices=INQUIRY_CHOICES)
+    message = models.TextField()
+    agree_to_terms = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.email} - {self.inquiry_type}"
+
 

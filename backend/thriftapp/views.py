@@ -15,16 +15,32 @@ from django.db.models import Q
 #for sending mail and generate token
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
-from .utils import TokenGenerator,generate_token
-from django.utils.encoding import force_bytes,force_text,DjangoUnicodeDecodeError
+from .utils import generate_token
+from django.utils.encoding import force_bytes,force_text
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.views.generic import View
-from smtplib import SMTPAuthenticationError
 
 
-# Create your views here.
-# thriftapp/views.py
+from rest_framework.permissions import AllowAny
+from .models import ContactInquiry
+from .serializers import ContactInquirySerializer
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def create_contact_inquiry(request):
+    serializer = ContactInquirySerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def get_all_inquiries(request):
+    inquiries = ContactInquiry.objects.all().order_by('-submitted_at')
+    serializer = ContactInquirySerializer(inquiries, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -96,10 +112,10 @@ def getRental(request,pk):
 def searchProducts(request):
     query = request.query_params.get('q', '')
     if query:
-        products = Products.objects.filter(  # Changed from Product to Products
-            Q(productname__icontains=query) |  # Changed name to productname
-            Q(productdescription__icontains=query) |  # Changed description to productdescription
-            Q(productcategory__icontains=query)  # Changed category to productcategory
+        products = Products.objects.filter(  
+            Q(productname__icontains=query) |  
+            Q(productdescription__icontains=query) | 
+            Q(productcategory__icontains=query)  
         )
         serializer = productSerializer(products, many=True)
         return Response(serializer.data)
@@ -108,11 +124,11 @@ def searchProducts(request):
     
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        # Allow email as username
+     
         attrs['username'] = attrs.get('email', attrs.get('username'))
         data = super().validate(attrs)
         
-        # Add user data to response
+       
         serializer = UserSerializerWithToken(self.user).data
         for k, v in serializer.items():
             data[k] = v           
@@ -160,21 +176,11 @@ def signupUser(request):
         'token': generate_token.make_token(user),
         })
 
-        # print(message)
+       
         email_message=EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[data['email']])
         email_message.send()
         message = {'details': 'Please check email activation link has been sent to your email'}
         return Response(message)
-    
-        
-
-    #     serializer = UserSerializerWithToken(user, many=False)
-    #     return Response(serializer.data)
-    
-    # except SMTPAuthenticationError as e:
-    #     # Handle SMTP authentication errors
-    #     print(f"SMTP Authentication Error: {e}")
-    #     return Response({'details': 'Failed to send email. Please check your email configuration.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
     except Exception as e:
@@ -200,7 +206,6 @@ class ActivateAccountView(View):
 @api_view(['GET'])
 def getProductsByCategory(request, category_slug):
     try:
-        # CHANGE THIS LINE: from 'category' to 'productcategory'
         products = Products.objects.filter(productcategory__iexact=category_slug)
         serializer = productSerializer(products, many=True)
         return Response(serializer.data)
@@ -221,12 +226,10 @@ def createOrder(request):
     user = request.user
     data = request.data
 
-    # Validate order items
     order_items = data.get('orderItems', [])
     if not order_items:
         return Response({'detail': 'No order items provided'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Create order
     order = Order.objects.create(
         user=user,
         paymentMethod=data.get('paymentMethod', ''),
@@ -236,7 +239,6 @@ def createOrder(request):
         paidAt=timezone.now() if data.get('isPaid', False) else None
     )
 
-    # Create order items
     for item in order_items:
         product = Products.objects.get(_id=item['product'])
         if product.countInStock < item['qty']:
@@ -253,7 +255,7 @@ def createOrder(request):
             qty=item['qty'],
             price=item['price']
         )
-        # Update product stock
+
         product.countInStock -= item['qty']
         product.save()
 

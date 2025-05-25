@@ -23,7 +23,6 @@ urlpatterns = [
     path('admin/users/', views.all_users),
     path('admin/products/', views.all_products),
     path('admin/rentals/', views.all_rentals),
-    # path('categories/', views.getCategories, name="getCategories"),
     path('products/category/<str:category_slug>/', views.getProductsByCategory, name="getProductsByCategory"),
     path('orders/', views.getUserOrders, name='user-orders'),
     path('orders/create/', views.createOrder, name='create-order'),
@@ -31,6 +30,8 @@ urlpatterns = [
     path('orders/<str:pk>/pay/', views.updateOrderToPaid, name='order-pay'),
     path('admin/orders/', views.getAllOrders, name='all-orders'),
     path('orders/<str:pk>/delete/', views.deleteOrder, name='delete-order'),    
+    path('contact/', views.create_contact_inquiry),
+    path('admin/contact/', views.get_all_inquiries),
 
 ]
 

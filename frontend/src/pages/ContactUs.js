@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import axios from 'axios';
 import Footer from '../components/Footer';
 import './ContactUs.css';
 
@@ -15,6 +16,7 @@ function ContactPage() {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -24,30 +26,58 @@ function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.email || !formData.message) {
-      setError('Email and message are required');
-      return;
-    }
-    
-    if (formData.inquiryType === 'sell' && !formData.phone) {
-      setError('Phone number is required for selling inquiries');
-      return;
-    }
-    
-    if (!formData.agreeToTerms) {
-      setError('You must agree to the terms and conditions');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Basic validation (keep your existing validation)...
+
+  if (!formData.email || !formData.message) {
+    setError('Email and message are required');
+    return;
+  }
+
+  if (formData.inquiryType === 'sell' && !formData.phone) {
+    setError('Phone number is required for selling inquiries');
+    return;
+  }
+
+  if (!formData.agreeToTerms) {
+    setError('You must agree to the terms and conditions');
+    return;
+  }
+
+  // Map frontend camelCase keys to backend snake_case keys
+  const payload = {
+    name: formData.name,
+    email: formData.email,
+    phone: formData.phone,
+    inquiry_type: formData.inquiryType,
+    message: formData.message,
+    agree_to_terms: formData.agreeToTerms,
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/api/contact/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      setError(data.message || 'Failed to submit form');
       return;
     }
 
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData);
     setSubmitted(true);
     setError('');
-  };
+  } catch (err) {
+    setError('Network error: Could not submit form');
+  }
+};
+
 
   if (submitted) {
     return (
@@ -59,7 +89,17 @@ function ContactPage() {
           </p>
           <Button 
             variant="outline-secondary" 
-            onClick={() => setSubmitted(false)}
+            onClick={() => {
+              setSubmitted(false);
+              setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                message: '',
+                inquiryType: 'feedback',
+                agreeToTerms: false
+              });
+            }}
             className="vintage-contact-btn"
           >
             Submit Another Inquiry
@@ -139,8 +179,8 @@ function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder={
-                    formData.inquiryType === 'sell' 
-                      ? 'Please describe the items you want to sell (type, condition, quantity, etc.)' 
+                    formData.inquiryType === 'sell'
+                      ? 'Please describe the items you want to sell (type, condition, quantity, etc.)'
                       : 'Enter your message here'
                   }
                   required
@@ -162,8 +202,9 @@ function ContactPage() {
                 variant="primary" 
                 type="submit" 
                 className="w-100 vintage-submit-btn"
+                disabled={loading}
               >
-                Submit
+                {loading ? <Spinner animation="border" size="sm" /> : 'Submit'}
               </Button>
             </Form>
           </Col>

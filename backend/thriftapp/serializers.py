@@ -6,6 +6,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 from .models import OrderItem
 from .models import Order
+from .models import ContactInquiry
+
+class ContactInquirySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactInquiry
+        fields = '__all__'
 
 
 class productSerializer(serializers.ModelSerializer):
@@ -38,7 +44,7 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.is_staff
 
 
-class UserSerializerWithToken(UserSerializer):  # Inherit from UserSerializer
+class UserSerializerWithToken(UserSerializer):  
     token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -47,7 +53,7 @@ class UserSerializerWithToken(UserSerializer):  # Inherit from UserSerializer
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
-        return str(token.access_token)  # Return the token as a string
+        return str(token.access_token) 
     
 class OrderItemSerializer(serializers.ModelSerializer):
     product = productSerializer(read_only=True)
