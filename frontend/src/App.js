@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Productscreen from "./pages/Productscreen";
 import Cart from "./pages/Cart";
 import Category from "./pages/Category";
-
+import Rental from "./components/Rproduct";
 import Rentalpage from "./pages/Rental";
 import Rentalscreen from "./pages/Rentalscreen";
 import SearchScreen from "./pages/Searchscreen";
@@ -15,6 +15,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import Rent from "./pages/Rent";
 import ContactPage from "./pages/ContactUs";
+import ShippingScreen from './pages/ShippingScreen';
+
+
 
 function App() {
   return (
@@ -44,8 +47,11 @@ function App() {
         />
         <Route path="/category/:category" element={<Category />} />
         <Route path="/category/all" element={<Category />} />
+        <Route path="/rental/:category" element={<Rental />} />
+        <Route path="/rental/all" element={<Rental />} />
         <Route path="/" element={<Category />} />
-      </Routes>
+        <Route path='/login/shipping' element={<ShippingScreen />} />      
+        </Routes>
     </Router>
   );
 }

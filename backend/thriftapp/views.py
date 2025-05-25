@@ -206,3 +206,125 @@ def getProductsByCategory(request, category_slug):
         return Response(serializer.data)
     except Products.DoesNotExist:
         return Response({'detail': 'Category not found or no products in category'}, status=404)
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Order, OrderItem, Products
+from .serializers import OrderSerializer, OrderItemSerializer
+from django.utils import timezone
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createOrder(request):
+    user = request.user
+    data = request.data
+
+    # Validate order items
+    order_items = data.get('orderItems', [])
+    if not order_items:
+        return Response({'detail': 'No order items provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Create order
+    order = Order.objects.create(
+        user=user,
+        paymentMethod=data.get('paymentMethod', ''),
+        shippingPrice=data.get('shippingPrice', 0.00),
+        totalPrice=data.get('totalPrice', 0.00),
+        isPaid=data.get('isPaid', False),
+        paidAt=timezone.now() if data.get('isPaid', False) else None
+    )
+
+    # Create order items
+    for item in order_items:
+        product = Products.objects.get(_id=item['product'])
+        if product.countInStock < item['qty']:
+            order.delete()
+            return Response(
+                {'detail': f'Not enough stock for {product.productname}'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            name=product.productname,
+            qty=item['qty'],
+            price=item['price']
+        )
+        # Update product stock
+        product.countInStock -= item['qty']
+        product.save()
+
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUserOrders(request):
+    user = request.user
+    orders = Order.objects.filter(user=user).order_by('-createdAt')
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getOrderById(request, pk):
+    try:
+        order = Order.objects.get(_id=pk)
+        if request.user == order.user or request.user.is_staff:
+            serializer = OrderSerializer(order, many=False)
+            return Response(serializer.data)
+        return Response(
+            {'detail': 'Not authorized to view this order'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    except Order.DoesNotExist:
+        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateOrderToPaid(request, pk):
+    try:
+        order = Order.objects.get(_id=pk)
+        if request.user == order.user or request.user.is_staff:
+            order.isPaid = True
+            order.paidAt = timezone.now()
+            order.save()
+            serializer = OrderSerializer(order, many=False)
+            return Response(serializer.data)
+        return Response(
+            {'detail': 'Not authorized to update this order'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    except Order.DoesNotExist:
+        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getAllOrders(request):
+    orders = Order.objects.all().order_by('-createdAt')
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteOrder(request, pk):
+    try:
+        order = Order.objects.get(_id=pk)
+        if request.user == order.user or request.user.is_staff:
+            # Restore product stock
+            for item in order.order_items.all():
+                product = item.product
+                if product:
+                    product.countInStock += item.qty
+                    product.save()
+            order.delete()
+            return Response({'detail': 'Order deleted'}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {'detail': 'Not authorized to delete this order'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    except Order.DoesNotExist:
+        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)

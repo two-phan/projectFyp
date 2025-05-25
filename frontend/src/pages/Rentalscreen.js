@@ -32,12 +32,12 @@ function RentalScreen() {
   const rentNowHandler = () => {
     navigate(`/rent/${id}?duration=${duration}`);
   };
-  
 
   return (
     <div className="vintage-rental-screen">
       <Container className="vintage-rental-container">
-        <Link to="/rental" className="btn btn-vintage-back">&larr;Back to Rental
+        <Link to="/rental" className="btn btn-vintage-back">
+          &larr; Back to Rental
         </Link>
 
         {loading ? (
@@ -102,22 +102,23 @@ function RentalScreen() {
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                  
+
+                  {/* Show status using rental.status */}
                   <ListGroup.Item className="vintage-rental-list-item">
                     <Row>
                       <Col>
                         <p className="vintage-summary-label">Status:</p>
                       </Col>
                       <Col className="text-right">
-                        <span className={`vintage-availability ${rental.countInStock ? 'vintage-available' : 'vintage-unavailable'}`}>
-                          {rental.countInStock > 0 ? "Available" : "Unavailable"}
+                        <span className={`vintage-availability ${rental.status === 'available' && rental.countInStock > 0 ? 'vintage-available' : 'vintage-unavailable'}`}>
+                          {rental.status === 'available' && rental.countInStock > 0 ? "Available" : "Unavailable"}
                         </span>
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                  
 
-                  {rental.isAvailable && (
+                  
+                  {rental.status === 'available' && rental.countInStock > 0 && (
                     <ListGroup.Item className="vintage-rental-list-item">
                       <Row>
                         <Col>
@@ -141,13 +142,16 @@ function RentalScreen() {
                     </ListGroup.Item>
                   )}
 
+                  {/* Rent Now button */}
                   <ListGroup.Item className="vintage-rental-list-item">
                     <Button
                       className="vintage-rent-now-btn"
-                      disabled={rental.countInStock === 0}
+                      disabled={rental.status !== 'available' || rental.countInStock === 0}
                       onClick={rentNowHandler}
                     >
-                      {rental.countInStock > 0 ? "Rent Now" : "Unavailable"}
+                      {rental.status === 'available' && rental.countInStock > 0
+                        ? "Rent Now"
+                        : "Unavailable"}
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>

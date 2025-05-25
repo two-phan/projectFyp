@@ -59,6 +59,17 @@ class Rentals(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     countInStock = models.IntegerField(null=True, blank=True, default=0)
 
+    STATUS_CHOICES = [
+        ('available', 'Available'),
+        ('unavailable', 'Unavailable'),
+    ]
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='available',
+    )
+
+
     def __str__(self):
         return self.rentalname
     

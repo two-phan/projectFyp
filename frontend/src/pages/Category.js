@@ -13,7 +13,6 @@ function Category() {
   const { category } = useParams();
   const dispatch = useDispatch();
 
-  // Define your static categories based on your Django model choices
   const staticCategories = [
     { slug: 'shirts', name: 'Shirts' },
     { slug: 'jackets', name: 'Jackets' },
@@ -22,7 +21,6 @@ function Category() {
     { slug: 'others', name: 'Others' },
   ];
 
-  // Safely get categoryProducts state with default values
   const categoryProducts = useSelector((state) => state.categoryProducts || {});
   const { 
     loading: loadingProducts, 
