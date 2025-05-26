@@ -55,7 +55,6 @@ function ProductScreen() {
           </Alert>
         ) : (
           <Row className="vintage-product-container">
-            {/* Product Image Column */}
             <Col md={5} className="mb-4">
               <div className="vintage-image-container">
                 <Image
@@ -68,7 +67,6 @@ function ProductScreen() {
               </div>
             </Col>
 
-            {/* Product Details Column */}
             <Col md={4} className="mb-4">
               <Card className="vintage-details-card">
                 <ListGroup variant="flush">
@@ -105,7 +103,6 @@ function ProductScreen() {
               </Card>
             </Col>
 
-            {/* Purchase Column */}
             <Col md={3} className="mb-4">
               <Card className="vintage-purchase-card">
                 <ListGroup variant="flush">

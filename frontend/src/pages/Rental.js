@@ -41,7 +41,6 @@ function Rentalpage() {
     <div className="vintage-rental-page">
       <Container className="py-4">
         <Row>
-          {/* Categories Sidebar */}
           <Col md={3} className="mb-4">
             <div className="vintage-sidebar">
               <h3 className="vintage-sidebar-title">Rental Categories</h3>
@@ -72,7 +71,6 @@ function Rentalpage() {
             </div>
           </Col>
 
-          {/* Rentals Display */}
           <Col md={9}>
             <div className="vintage-products-header">
               <h2 className="vintage-products-title">

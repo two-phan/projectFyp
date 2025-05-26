@@ -47,7 +47,6 @@ function Cart() {
     <div className="vintage-cart-page">
       <Container className="py-4">
         <Row>
-          {/* Cart Items Column */}
           <Col md={8} className="mb-4">
             <div className="vintage-cart-header">
               <h1 className="vintage-cart-title">Your Vintage Collection</h1>
@@ -63,7 +62,6 @@ function Cart() {
                 {cartItems.map((item) => (
                   <ListGroup.Item key={item.product} className="vintage-cart-item">
                     <Row className="align-items-center">
-                      {/* Product Image */}
                       <Col md={2} className="vintage-cart-image-col">
                         <Image 
                           src={item.image} 
@@ -73,7 +71,6 @@ function Cart() {
                         />
                       </Col>
 
-                      {/* Product Name */}
                       <Col md={3} className="vintage-cart-name-col">
                         <Link 
                           to={`/product/${item.product}`} 
@@ -83,12 +80,10 @@ function Cart() {
                         </Link>
                       </Col>
 
-                      {/* Product Price */}
                       <Col md={2} className="vintage-cart-price-col">
                         <span className="vintage-cart-price">Rs {item.price}</span>
                       </Col>
 
-                      {/* Quantity Selector */}
                       <Col md={2} className="vintage-cart-qty-col">
                         <Form.Control
                           as="select"
@@ -104,7 +99,6 @@ function Cart() {
                         </Form.Control>
                       </Col>
 
-                      {/* Remove Button */}
                       <Col md={2} className="vintage-cart-remove-col">
                         <Button
                           type="button"
@@ -122,7 +116,6 @@ function Cart() {
             )}
           </Col>
 
-          {/* Order Summary Column */}
           <Col md={4}>
             <Card className="vintage-summary-card">
               <ListGroup variant="flush">

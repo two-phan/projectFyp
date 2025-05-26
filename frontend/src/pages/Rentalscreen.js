@@ -103,7 +103,6 @@ function RentalScreen() {
                     </Row>
                   </ListGroup.Item>
 
-                  {/* Show status using rental.status */}
                   <ListGroup.Item className="vintage-rental-list-item">
                     <Row>
                       <Col>
@@ -142,7 +141,6 @@ function RentalScreen() {
                     </ListGroup.Item>
                   )}
 
-                  {/* Rent Now button */}
                   <ListGroup.Item className="vintage-rental-list-item">
                     <Button
                       className="vintage-rent-now-btn"

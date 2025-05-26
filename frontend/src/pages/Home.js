@@ -26,7 +26,6 @@ function Home() {
   return (
     <>
       <Container>
-        {/* Carousel Section */}
         <Carousel className="mb-4">
           <Carousel.Item interval={3000}>
             <img

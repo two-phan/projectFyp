@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard.js
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,6 @@ function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [rentals, setRentals] = useState([]);
-  const [contacts, setContacts] = useState([]);
 
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -29,14 +27,12 @@ function AdminDashboard() {
           axios.get('/api/admin/users/', config),
           axios.get('/api/admin/products/', config),
           axios.get('/api/admin/rentals/', config),
-          // // axios.get('/api/admin/contacts/', config),
 
         ]);
         setStats(statsRes.data);
         setUsers(usersRes.data);
         setProducts(productsRes.data);
         setRentals(rentalsRes.data);
-        // setContacts(contactsRes.data);
       } catch (err) {
         setError(err.response?.data?.message || err.message);
       }
@@ -48,7 +44,6 @@ function AdminDashboard() {
   return (
     <Container fluid>
       <Row>
-        {/* Sidebar */}
         <Col md={2} className="bg-dark min-vh-100 p-3">
           <h4 className="text-white mb-4">Admin Panel</h4>
           <nav className="nav flex-column">
@@ -58,12 +53,10 @@ function AdminDashboard() {
           </nav>
         </Col>
 
-        {/* Main Content */}
         <Col md={10} className="p-4">
           <h2 className="mb-4">Admin Dashboard</h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
-          {/* Stats */}
           <Row className="mb-4">
             {stats && (
               <>
@@ -75,7 +68,6 @@ function AdminDashboard() {
             )}
           </Row>
 
-          {/* User Details */}
           <h4 className="mt-5">User Details</h4>
           <Row>
             {users.map((user) => (
@@ -91,7 +83,6 @@ function AdminDashboard() {
             ))}
           </Row>
 
-          {/* Product Details */}
           <h4 className="mt-5">Product Details</h4>
           <Row>
             {products.map((product) => (
@@ -107,7 +98,6 @@ function AdminDashboard() {
             ))}
           </Row>
 
-          {/* Rental Details */}
           <h4 className="mt-5">Rental Details</h4>
           <Row>
             {rentals.map((rental) => (

@@ -37,7 +37,6 @@ function Signup() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // console.log(fname, lname, email, pass1, pass2);
 
     if (pass1 !== pass2) {
       setMessage("Passwords do not match");

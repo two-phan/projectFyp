@@ -32,14 +32,12 @@ function Category() {
     dispatch(listCategoryProducts(category || 'all'));
   }, [dispatch, category]);
 
-  // Find the current category name
   const currentCategory = staticCategories.find(c => c.slug === category)?.name || category;
 
   return (
     <div className="vintage-category-page">
       <Container className="py-4">
         <Row>
-          {/* Categories Sidebar */}
           <Col md={3} className="mb-4">
             <div className="vintage-sidebar">
               <h3 className="vintage-sidebar-title">Shop By Category</h3>
@@ -70,7 +68,6 @@ function Category() {
             </div>
           </Col>
 
-          {/* Products Display */}
           <Col md={9}>
             <div className="vintage-products-header">
               <h2 className="vintage-products-title">

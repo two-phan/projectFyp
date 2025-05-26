@@ -47,7 +47,6 @@ function Rent() {
     <div className="vintage-rent-page">
       <Container className="py-4">
         <Row>
-          {/* Rental Items Column */}
           <Col md={8} className="mb-4">
             <div className="vintage-rent-header">
               <h1 className="vintage-rent-title">Your Rental Collection</h1>
@@ -63,7 +62,6 @@ function Rent() {
                 {rentalItems.map((item) => (
                   <ListGroup.Item key={item.rental} className="vintage-rent-item">
                     <Row className="align-items-center">
-                      {/* Rental Image */}
                       <Col md={2} className="vintage-rent-image-col">
                         <Image 
                           src={item.image} 
@@ -73,7 +71,6 @@ function Rent() {
                         />
                       </Col>
 
-                      {/* Rental Name */}
                       <Col md={3} className="vintage-rent-name-col">
                         <Link 
                           to={`/rental/${item.rental}`} 
@@ -83,12 +80,10 @@ function Rent() {
                         </Link>
                       </Col>
 
-                      {/* Rental Price */}
                       <Col md={2} className="vintage-rent-price-col">
                         <span className="vintage-rent-price">Rs {item.price}/day</span>
                       </Col>
 
-                      {/* Duration Selector */}
                       <Col md={2} className="vintage-rent-duration-col">
                         <Form.Control
                           as="select"
@@ -104,12 +99,10 @@ function Rent() {
                         </Form.Control>
                       </Col>
 
-                      {/* Total Price */}
                       <Col md={2} className="vintage-rent-total-col">
                         <span className="vintage-rent-total">Rs {(item.price * item.duration).toFixed(2)}</span>
                       </Col>
 
-                      {/* Remove Button */}
                       <Col md={1} className="vintage-rent-remove-col">
                         <Button
                           type="button"
@@ -127,7 +120,6 @@ function Rent() {
             )}
           </Col>
 
-          {/* Order Summary Column */}
           <Col md={4}>
             <Card className="vintage-summary-card">
               <ListGroup variant="flush">

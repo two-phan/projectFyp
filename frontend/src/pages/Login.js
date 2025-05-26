@@ -4,7 +4,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { InputGroup } from "react-bootstrap";
 import Message from "../components/Message";
-// import { validEmail, validPassword } from "../components/Validpass";
 import { login } from "../actions/userActions";
 import Loader from "../components/Loader";
 import "./Form.css";
@@ -25,7 +24,7 @@ function Login() {
 
   useEffect(() => {
     if (userInfo) {
-      console.log("User Info:", userInfo); // Add this line
+      console.log("User Info:", userInfo); 
       if (userInfo.isAdmin) {
         navigate("/admin/dashboard");
       } else {
@@ -52,22 +51,21 @@ function Login() {
   };
 
   return (
-    <Container className="login-container"> {/* Added login-container class */}
-      <Row className="justify-content-center"> {/* Center the row */}
-        <Col md={6}> {/* Adjust md value to control the width of the form */}
+    <Container className="login-container"> 
+      <Row className="justify-content-center"> 
+        <Col md={6}> 
           <Card>
             <Card.Header as="h3" className="text-center bg-black text-light">
               Login
             </Card.Header>
 
             <Card.Body>
-              {/* Show loading spinner if loading */}
+              
               {loading && <Loader />}
 
-              {/* Show error message if error exists */}
+
               {error && <Message variant="danger">{error}</Message>}
 
-              {/* Always show the form */}
               <Form onSubmit={submitHandler}>
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>

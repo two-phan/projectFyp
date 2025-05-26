@@ -29,7 +29,6 @@ function ContactPage() {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  // Basic validation (keep your existing validation)...
 
   if (!formData.email || !formData.message) {
     setError('Email and message are required');
@@ -46,7 +45,6 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  // Map frontend camelCase keys to backend snake_case keys
   const payload = {
     name: formData.name,
     email: formData.email,

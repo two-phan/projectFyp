@@ -1,16 +1,13 @@
 import React from "react";
 import { Container, Row, Col, Card, ListGroup, Button, Image, Alert } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { FaCheckCircle, FaCalendarAlt, FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
 import Footer from "../components/Footer";
-// import "./RentalConfirmationScreen.css";
 
 function RentalConfirmationScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { rental, duration, totalPrice, startDate, endDate, confirmationNumber } = location.state || {};
+  const { rental, duration, totalPrice, startDate, endDate } = location.state || {};
 
-  // If no state was passed, redirect back
   if (!location.state) {
     navigate("/rental");
     return null;

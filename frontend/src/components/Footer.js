@@ -40,7 +40,7 @@ function Footer() {
           <Col md={4} className="footer-section">
             <h5 className="footer-heading">Contact Us</h5>
             <address className="footer-address">
-              <p>Contact us at the below number and email</p>
+              <p>For further inquiries contact us at the below number and email</p>
               <p>Phone: 9801234567</p>
               <p>Email: thriftyfifty@gmai.com</p>
             </address>
