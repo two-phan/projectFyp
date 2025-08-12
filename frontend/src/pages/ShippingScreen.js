@@ -12,17 +12,25 @@ function ShippingScreen() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
-  const [address, setAddress] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('PayNow');
+  const [shippingAddress, setShippingAddress] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('esewa'); // Default to eSewa
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // Save full shipping info
-    dispatch(saveShippingAddress({ email, phone, city, address, paymentMethod }));
+    // Save full shipping info to Redux
+    dispatch(
+      saveShippingAddress({
+        email,
+        phone,
+        city,
+        shipping_address: shippingAddress, // match Django model field name
+        payment_method: paymentMethod, // match backend choices
+      })
+    );
 
-    if (paymentMethod === 'PayNow') {
-      navigate('/payment'); // Redirect to eSewa/Khalti payment page
+    if (paymentMethod === 'esewa') {
+      navigate('/payment'); // Redirect to eSewa payment page
     } else {
       navigate('/placeorder'); // Redirect to place order directly for COD
     }
@@ -32,70 +40,81 @@ function ShippingScreen() {
     <FormContainer>
       <h1>Shipping & Payment</h1>
       <Form onSubmit={submitHandler}>
+        {/* Email */}
+        <Form.Group controlId="email" className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            required
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
 
         {/* Phone */}
-        <Form.Group controlId='phone' className='mb-3'>
+        <Form.Group controlId="phone" className="mb-3">
           <Form.Label>Phone Number</Form.Label>
           <Form.Control
-            type='text'
+            type="text"
             required
-            placeholder='Enter phone number'
+            placeholder="Enter phone number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
         </Form.Group>
 
         {/* City */}
-        <Form.Group controlId='city' className='mb-3'>
+        <Form.Group controlId="city" className="mb-3">
           <Form.Label>City</Form.Label>
           <Form.Control
-            type='text'
+            type="text"
             required
-            placeholder='Enter city'
+            placeholder="Enter city"
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
         </Form.Group>
 
-        {/* Address */}
-        <Form.Group controlId='address' className='mb-3'>
+        {/* Shipping Address */}
+        <Form.Group controlId="shippingAddress" className="mb-3">
           <Form.Label>Shipping Address</Form.Label>
           <Form.Control
-            type='text'
+            type="text"
             required
-            placeholder='Enter shipping address'
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Enter shipping address"
+            value={shippingAddress}
+            onChange={(e) => setShippingAddress(e.target.value)}
           />
         </Form.Group>
 
         {/* Payment Method */}
-        <Form.Group controlId='paymentMethod' className='mb-4'>
+        <Form.Group controlId="paymentMethod" className="mb-4">
           <Form.Label>Payment Method</Form.Label>
           <div>
             <Form.Check
-              type='radio'
-              label='Pay Now eSewa'
-              id='PayNow'
-              name='paymentMethod'
-              value='PayNow'
-              checked={paymentMethod === 'PayNow'}
+              type="radio"
+              label="Pay Now (eSewa)"
+              id="esewa"
+              name="paymentMethod"
+              value="esewa"
+              checked={paymentMethod === 'esewa'}
               onChange={(e) => setPaymentMethod(e.target.value)}
             />
             <Form.Check
-              type='radio'
-              label='Cash on Delivery (COD)'
-              id='COD'
-              name='paymentMethod'
-              value='COD'
-              checked={paymentMethod === 'COD'}
+              type="radio"
+              label="Cash on Delivery (COD)"
+              id="cod"
+              name="paymentMethod"
+              value="cod"
+              checked={paymentMethod === 'cod'}
               onChange={(e) => setPaymentMethod(e.target.value)}
             />
           </div>
         </Form.Group>
 
-        <Button type='submit' variant='primary'>
-          {paymentMethod === 'PayNow' ? 'Proceed to Payment' : 'Place Order'}
+        <Button type="submit" variant="primary">
+          {paymentMethod === 'esewa' ? 'Proceed to Payment' : 'Place Order'}
         </Button>
       </Form>
     </FormContainer>

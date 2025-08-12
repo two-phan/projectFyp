@@ -17,6 +17,7 @@ import Rent from "./pages/Rent";
 import ContactPage from "./pages/ContactUs";
 import ShippingScreen from "./pages/ShippingScreen";
 import AdminContactPage from "./pages/AdminContactPage";
+import PlaceOrderScreen from "./pages/PlaceOrderScreen";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route path="/rental/all" element={<Rental />} />
         <Route path="/" element={<Category />} />
         <Route path="/login/shipping" element={<ShippingScreen />} />
+        <Route path="placeorder" element={<PlaceOrderScreen />} />
       </Routes>
     </Router>
   );

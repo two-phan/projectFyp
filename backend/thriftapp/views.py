@@ -223,13 +223,22 @@ from .serializers import OrderSerializer
 @permission_classes([IsAuthenticated])
 def create_order(request):
     data = request.data
-    data['user'] = request.user.id  # Set user from request
-
+    user = request.user
     serializer = OrderSerializer(data=data)
+
     if serializer.is_valid():
-        serializer.save(user=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        order = serializer.save(user=user)
+
+        # Reduce product stock
+        for item in order.items.all():
+            if item.product:
+                item.product.productstock -= item.qty
+                item.product.save()
+
+        return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
