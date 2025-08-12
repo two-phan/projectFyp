@@ -224,21 +224,20 @@ from .serializers import OrderSerializer
 def create_order(request):
     data = request.data
     user = request.user
+    data['user'] = user.id  # Set user ID
+    if data.get('payment_method') == 'PayNow':
+        data['payment_method'] = 'esewa'
     serializer = OrderSerializer(data=data)
 
     if serializer.is_valid():
-        order = serializer.save(user=user)
-
+        order = serializer.save()
         # Reduce product stock
         for item in order.items.all():
             if item.product:
-                item.product.productstock -= item.qty
+                item.product.countInStock -= item.qty
                 item.product.save()
-
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
-
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

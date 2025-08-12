@@ -1,0 +1,112 @@
+/* Container for the whole screen */
+.vintage-shipping-screen {
+  background-color: #f8f1e4; /* warm cream paper */
+  padding: 10px 10px;
+  font-family: 'Georgia', serif;
+  color: #5a4634;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Assuming FormContainer adds some max-width and centering */
+/* Style the h1 */
+.vintage-shipping-screen h1 {
+  font-family: 'Garamond', serif;
+  font-size: 2.5rem;
+  color: #6b4e26;
+  border-bottom: 3px solid #b39b72;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  letter-spacing: 1.2px;
+  text-shadow: 1px 1px 0 #dfd1b8;
+}
+
+/* Form labels */
+.vintage-shipping-screen label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #5a4634;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Inputs styling */
+.vintage-input {
+  border: 1.8px solid #b39b72;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background-color: #fff8eb;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  color: #5a4634;
+  box-shadow: inset 1px 1px 6px #e5d9b3;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vintage-input:focus {
+  border-color: #8b6f47;
+  outline: none;
+  box-shadow: 0 0 8px #a38658cc;
+}
+
+/* Radio group container */
+.vintage-radio-group {
+  display: flex;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+/* Radio buttons styling */
+.vintage-radio .form-check-input {
+  cursor: pointer;
+  accent-color: #a07c52; /* warm brown */
+  width: 18px;
+  height: 18px;
+}
+
+.vintage-radio .form-check-label {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  color: #5a4634;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Button styling */
+.vintage-button {
+  background-color: #a07c52;
+  border: none;
+  color: #fff8e7;
+  font-family: 'Garamond', serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 14px 25px;
+  border-radius: 8px;
+  width: 100%;
+  box-shadow: 3px 3px 8px #785e2b;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.vintage-button:hover,
+.vintage-button:focus {
+  background-color: #765d2d;
+  box-shadow: 4px 4px 12px #5f4b18;
+  outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .vintage-radio-group {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .vintage-button {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}

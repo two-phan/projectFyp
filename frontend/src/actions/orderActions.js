@@ -1,29 +1,38 @@
 import axios from 'axios';
-import { ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL } from '../constants/orderConstants';
+import {
+    ORDER_CREATE_REQUEST,
+    ORDER_CREATE_SUCCESS,
+    ORDER_CREATE_FAIL,
+} from '../constants/orderConstants';
 
-export const createOrder = (orderData) => async (dispatch, getState) => {
-  try {
-    const {
-      userLogin: { userInfo },
-    } = getState();
+export const createOrder = (order) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ORDER_CREATE_REQUEST });
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+        const {
+            userLogin: { userInfo },
+        } = getState();
 
-    const { data } = await axios.post('/api/orders/create/', orderData, config);
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
 
-    dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ORDER_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
+        const { data } = await axios.post('/api/orders/create/', order, config);
+
+        dispatch({
+            type: ORDER_CREATE_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: ORDER_CREATE_FAIL,
+            payload:
+                error.response && error.response.data.detail
+                    ? error.response.data.detail
+                    : error.message,
+        });
+    }
 };

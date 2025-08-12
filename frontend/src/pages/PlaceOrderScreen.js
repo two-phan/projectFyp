@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Row, Col, ListGroup, Image, Card, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { createOrder } from '../actions/orderActions';
+import './PlaceOrderScreen.css';  // Import vintage CSS
 
 function PlaceOrderScreen() {
   const dispatch = useDispatch();
@@ -38,46 +39,38 @@ function PlaceOrderScreen() {
   };
 
   return (
-    <>
+    <div className="placeorder-container">
       <h1>Place Order</h1>
-      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {successMessage && <Alert variant="success" className="vintage-alert">{successMessage}</Alert>}
       <Row>
-        <Col md={8}>
+        <Col md={7} className="placeorder-left">
           <ListGroup variant="flush">
-            <ListGroup.Item>
+            <ListGroup.Item className="vintage-list-group-item">
               <h2>Shipping</h2>
-              <p>
-                <strong>Email:</strong> {cart.shippingAddress.email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {cart.shippingAddress.phone}
-              </p>
-              <p>
-                <strong>Address:</strong> {cart.shippingAddress.shipping_address}, {cart.shippingAddress.city}
-              </p>
+              <p><strong>Email:</strong> {cart.shippingAddress.email}</p>
+              <p><strong>Phone:</strong> {cart.shippingAddress.phone}</p>
+              <p><strong>Address:</strong> {cart.shippingAddress.shipping_address}, {cart.shippingAddress.city}</p>
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className="vintage-list-group-item">
               <h2>Payment Method</h2>
               <p>{cart.shippingAddress.payment_method === 'esewa' ? 'eSewa' : 'Cash on Delivery'}</p>
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className="vintage-list-group-item">
               <h2>Order Items</h2>
               {cart.cartItems.length === 0 ? (
                 <p>Your cart is empty</p>
               ) : (
                 <ListGroup variant="flush">
                   {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
+                    <ListGroup.Item key={index} className="vintage-list-group-item order-item">
                       <Row>
                         <Col md={2}>
-                          <Image src={item.image} alt={item.name} fluid rounded />
+                          <Image src={item.image} alt={item.name} fluid rounded className="vintage-product-image" />
                         </Col>
-                        <Col>
-                          {item.name}
-                        </Col>
-                        <Col md={4}>
+                        <Col className="product-name">{item.name}</Col>
+                        <Col md={4} className="product-price">
                           {item.qty} x Rs.{item.price} = Rs.{item.qty * item.price}
                         </Col>
                       </Row>
@@ -89,22 +82,22 @@ function PlaceOrderScreen() {
           </ListGroup>
         </Col>
 
-        <Col md={4}>
-          <Card>
+        <Col md={5} className="placeorder-right">
+          <Card className="vintage-card">
             <ListGroup variant="flush">
-              <ListGroup.Item>
+              <ListGroup.Item className="vintage-list-group-item summary-header">
                 <h2>Order Summary</h2>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="vintage-list-group-item summary-total">
                 <Row>
-                  <Col>Total</Col>
+                  <Col>Total :</Col>
                   <Col>Rs.{totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="vintage-list-group-item">
                 <Button
                   type="button"
-                  className="btn-block"
+                  className="vintage-button"
                   disabled={cart.cartItems.length === 0}
                   onClick={placeOrderHandler}
                 >
@@ -115,7 +108,7 @@ function PlaceOrderScreen() {
           </Card>
         </Col>
       </Row>
-    </>
+    </div>
   );
 }
 

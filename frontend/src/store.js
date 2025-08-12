@@ -1,15 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { thunk } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productsListReducers } from './reducers/productsReducers';
-import { productDetailsReducers } from './reducers/productsReducers';
+import { productsListReducers, productDetailsReducers } from './reducers/productsReducers';
 import { userLoginReducers, userSignupReducers } from './reducers/userReducers';
 import { cartReducer } from './reducers/cartReducers';
 import { categoryListReducer, categoryProductsReducer } from './reducers/categoryReducers';
-import { rentalListReducers } from './reducers/rentalReducers';
-import { rentalDetailsReducers } from './reducers/rentalReducers';
+import { rentalListReducers, rentalDetailsReducers } from './reducers/rentalReducers';
 import { searchReducer } from './reducers/searchReducers';
 import { rentalCartReducer } from './reducers/rentalcartReducers';
+import { orderCreateReducer } from './reducers/orderReducers'; // Add this
 
 const reducer = combineReducers({
     productsList: productsListReducers,
@@ -23,17 +22,26 @@ const reducer = combineReducers({
     rentalDetails: rentalDetailsReducers,
     productSearch: searchReducer,
     rentalCart: rentalCartReducer,
-
+    orderCreate: orderCreateReducer, // Add this
 });
 
-const cartItemsFromStorage = localStorage.getItem("cartItems") ? 
-    JSON.parse(localStorage.getItem("cartItems")) : [];
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [];
 
-const rentalItemsFromStorage = localStorage.getItem("rentalItems") ? 
-    JSON.parse(localStorage.getItem("rentalItems")) : [];
+const rentalItemsFromStorage = localStorage.getItem("rentalItems")
+    ? JSON.parse(localStorage.getItem("rentalItems"))
+    : [];
+
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+    ? JSON.parse(localStorage.getItem("shippingAddress"))
+    : {};
 
 const initialState = {
-    cart: { cartItems: cartItemsFromStorage },
+    cart: {
+        cartItems: cartItemsFromStorage,
+        shippingAddress: shippingAddressFromStorage,
+    },
     rentalCart: { rentalItems: rentalItemsFromStorage },
 };
 
