@@ -216,117 +216,44 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Order, OrderItem, Products
-from .serializers import OrderSerializer, OrderItemSerializer
-from django.utils import timezone
+from .models import Order, OrderItem
+from .serializers import OrderSerializer
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def createOrder(request):
-    user = request.user
+def create_order(request):
     data = request.data
+    data['user'] = request.user.id  # Set user from request
 
-    order_items = data.get('orderItems', [])
-    if not order_items:
-        return Response({'detail': 'No order items provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-    order = Order.objects.create(
-        user=user,
-        paymentMethod=data.get('paymentMethod', ''),
-        shippingPrice=data.get('shippingPrice', 0.00),
-        totalPrice=data.get('totalPrice', 0.00),
-        isPaid=data.get('isPaid', False),
-        paidAt=timezone.now() if data.get('isPaid', False) else None
-    )
-
-    for item in order_items:
-        product = Products.objects.get(_id=item['product'])
-        if product.countInStock < item['qty']:
-            order.delete()
-            return Response(
-                {'detail': f'Not enough stock for {product.productname}'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        OrderItem.objects.create(
-            order=order,
-            product=product,
-            name=product.productname,
-            qty=item['qty'],
-            price=item['price']
-        )
-
-        product.countInStock -= item['qty']
-        product.save()
-
-    serializer = OrderSerializer(order, many=False)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    serializer = OrderSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getUserOrders(request):
-    user = request.user
-    orders = Order.objects.filter(user=user).order_by('-createdAt')
+def get_user_orders(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getOrderById(request, pk):
-    try:
-        order = Order.objects.get(_id=pk)
-        if request.user == order.user or request.user.is_staff:
-            serializer = OrderSerializer(order, many=False)
-            return Response(serializer.data)
-        return Response(
-            {'detail': 'Not authorized to view this order'},
-            status=status.HTTP_403_FORBIDDEN
-        )
-    except Order.DoesNotExist:
-        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
-
-@api_view(['PUT'])
-@permission_classes([IsAuthenticated])
-def updateOrderToPaid(request, pk):
-    try:
-        order = Order.objects.get(_id=pk)
-        if request.user == order.user or request.user.is_staff:
-            order.isPaid = True
-            order.paidAt = timezone.now()
-            order.save()
-            serializer = OrderSerializer(order, many=False)
-            return Response(serializer.data)
-        return Response(
-            {'detail': 'Not authorized to update this order'},
-            status=status.HTTP_403_FORBIDDEN
-        )
-    except Order.DoesNotExist:
-        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
-def getAllOrders(request):
-    orders = Order.objects.all().order_by('-createdAt')
+def get_all_orders(request):
+    orders = Order.objects.all().order_by('-created_at')
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
-@api_view(['DELETE'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def deleteOrder(request, pk):
+def get_order_by_id(request, pk):
     try:
-        order = Order.objects.get(_id=pk)
-        if request.user == order.user or request.user.is_staff:
-            # Restore product stock
-            for item in order.order_items.all():
-                product = item.product
-                if product:
-                    product.countInStock += item.qty
-                    product.save()
-            order.delete()
-            return Response({'detail': 'Order deleted'}, status=status.HTTP_204_NO_CONTENT)
-        return Response(
-            {'detail': 'Not authorized to delete this order'},
-            status=status.HTTP_403_FORBIDDEN
-        )
+        order = Order.objects.get(pk=pk)
+        # Only allow owner or admin to access
+        if order.user != request.user and not request.user.is_staff:
+            return Response({'detail': 'Not authorized to view this order'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = OrderSerializer(order, many=False)
+        return Response(serializer.data)
     except Order.DoesNotExist:
         return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)

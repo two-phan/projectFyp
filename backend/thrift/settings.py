@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'thrift.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'thriftStore',  # Replace with the name of your MySQL database
+        'NAME': 'thriftapp1',  # Replace with the name of your MySQL database
         'USER': 'root',  # Replace with your MySQL username
         'PASSWORD': '@Tuphan123',  # Replace with your MySQL password
         'HOST': 'localhost',  # Usually 'localhost' if MySQL is on the same machine

@@ -55,23 +55,47 @@ class UserSerializerWithToken(UserSerializer):
         token = RefreshToken.for_user(obj)
         return str(token.access_token) 
     
+from rest_framework import serializers
+from .models import Order, OrderItem, Products
+
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = productSerializer(read_only=True)
+    product = serializers.StringRelatedField(read_only=True)  # shows product's __str__ (name)
     product_id = serializers.PrimaryKeyRelatedField(
         queryset=Products.objects.all(), source='product', write_only=True
     )
 
     class Meta:
         model = OrderItem
-        fields = ['_id', 'product', 'product_id', 'name', 'qty', 'price']
+        fields = ['id', 'product', 'product_id', 'qty', 'price']
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True, read_only=True)
-    user = serializers.StringRelatedField(read_only=True)
+    user = serializers.StringRelatedField(read_only=True)  # shows username
+    items = OrderItemSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ['_id', 'user', 'paymentMethod', 'shippingPrice', 'totalPrice', 
-                 'isPaid', 'paidAt', 'createdAt', 'order_items']
-        
-        
+        fields = [
+            'id', 'user', 'phone', 'email', 'city', 'shipping_address',
+            'total_price', 'payment_method', 'is_paid', 'paid_at', 'created_at', 'items'
+        ]
+
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
+        for item_data in items_data:
+            OrderItem.objects.create(order=order, **item_data)
+        return order
+
+    def update(self, instance, validated_data):
+        items_data = validated_data.pop('items', None)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        if items_data is not None:
+            # Clear existing items
+            instance.items.all().delete()
+            for item_data in items_data:
+                OrderItem.objects.create(order=instance, **item_data)
+        return instance

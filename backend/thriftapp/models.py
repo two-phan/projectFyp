@@ -72,31 +72,37 @@ class Rentals(models.Model):
 
     def __str__(self):
         return self.rentalname
-    
 
 class Order(models.Model):
+    PAYMENT_METHODS = [
+        ('esewa', 'eSewa'),
+        ('cod', 'Cash on Delivery'),
+    ]
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS, default='esewa', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    paymentMethod = models.CharField(max_length=100)
-    shippingPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
-    totalPrice = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
-    isPaid = models.BooleanField(default=False)
-    paidAt = models.DateTimeField(null=True, blank=True)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    _id = models.AutoField(primary_key=True, editable=False)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField(null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)    
+    shipping_address = models.TextField(null=True, blank=True)    
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    is_paid = models.BooleanField(default=False)
+    paid_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self._id)
+        return f"Order #{self.id} - {self.user}"
 
 class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Products, on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-    name = models.CharField(max_length=200)
     qty = models.IntegerField()
-    price = models.DecimalField(max_digits=7, decimal_places=2)
-    _id = models.AutoField(primary_key=True, editable=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name
+        return f"{self.quantity} x {self.product.name}"
+
 
 class RentalOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
