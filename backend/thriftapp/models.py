@@ -88,6 +88,7 @@ class Order(models.Model):
     is_paid = models.BooleanField(default=False)
     paid_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    transaction_id = models.CharField(max_length=100, null=True, blank=True) 
     id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):

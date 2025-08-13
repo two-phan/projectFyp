@@ -18,6 +18,7 @@ import ContactPage from "./pages/ContactUs";
 import ShippingScreen from "./pages/ShippingScreen";
 import AdminContactPage from "./pages/AdminContactPage";
 import PlaceOrderScreen from "./pages/PlaceOrderScreen";
+import PaymentScreen from './pages/PaymentScreen';
 
 function App() {
   return (
@@ -60,6 +61,9 @@ function App() {
         <Route path="/" element={<Category />} />
         <Route path="/login/shipping" element={<ShippingScreen />} />
         <Route path="placeorder" element={<PlaceOrderScreen />} />
+        <Route path="/payment" element={<PaymentScreen />} />
+        <Route path="/placeorder" element={<PlaceOrderScreen />} />
+        <Route path="/shipping" element={<ShippingScreen />} />
       </Routes>
     </Router>
   );

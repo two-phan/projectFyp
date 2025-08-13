@@ -213,20 +213,26 @@ def getProductsByCategory(request, category_slug):
         return Response({'detail': 'Category not found or no products in category'}, status=404)
 
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Order, OrderItem
 from .serializers import OrderSerializer
+import requests
+import xmltodict
+import uuid
+from django.utils import timezone
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_order(request):
     data = request.data
     user = request.user
-    data['user'] = user.id  # Set user ID
+    data['user'] = user.id
     if data.get('payment_method') == 'PayNow':
         data['payment_method'] = 'esewa'
+    if data['payment_method'] == 'esewa':
+        data['transaction_id'] = str(uuid.uuid4())  # Generate unique transaction ID
     serializer = OrderSerializer(data=data)
 
     if serializer.is_valid():
@@ -238,6 +244,68 @@ def create_order(request):
                 item.product.save()
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def esewa_payment_initiate(request, order_id):
+    try:
+        order = Order.objects.get(id=order_id, user=request.user)
+        if order.payment_method != 'esewa' or order.is_paid:
+            return Response({'detail': 'Invalid order or already paid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({
+            'order_id': order.id,
+            'transaction_id': order.transaction_id,
+            'total_amount': str(order.total_price),
+            'success_url': 'http://127.0.0.1:8000/api/orders/esewa/success/',
+            'failure_url': 'http://127.0.0.1:8000/api/orders/esewa/failure/',
+            'merchant_code': 'EPAYTEST',
+        }, status=status.HTTP_200_OK)
+    except Order.DoesNotExist:
+        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def esewa_payment_success(request):
+    oid = request.GET.get('oid')  # Transaction ID
+    amt = request.GET.get('amt')  # Amount
+    refId = request.GET.get('refId')  # eSewa reference ID
+
+    try:
+        order = Order.objects.get(transaction_id=oid)
+        if order.is_paid:
+            return Response({'detail': 'Order already paid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verify transaction with eSewa
+        url = "https://uat.esewa.com.np/epay/transrec"
+        data = {
+            'amt': amt,
+            'scd': 'EPAYTEST',
+            'rid': refId,
+            'pid': oid,
+        }
+        response = requests.post(url, data=data)
+        json_response = xmltodict.parse(response.content)
+        status_response = json_response.get('response', {}).get('response_code')
+
+        if status_response != 'Success':
+            return Response({'detail': 'Payment verification failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verify amount matches
+        if float(amt) != float(order.total_price):
+            return Response({'detail': 'Amount mismatch'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Update order
+        order.is_paid = True
+        order.paid_at = timezone.now()
+        order.save()
+
+        return Response({'detail': 'Payment successful', 'order_id': order.id}, status=status.HTTP_200_OK)
+    except Order.DoesNotExist:
+        return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def esewa_payment_failure(request):
+    return Response({'detail': 'Payment failed or cancelled'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

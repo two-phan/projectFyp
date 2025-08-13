@@ -1,3 +1,4 @@
+// frontend/src/store.js
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { thunk } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -8,7 +9,7 @@ import { categoryListReducer, categoryProductsReducer } from './reducers/categor
 import { rentalListReducers, rentalDetailsReducers } from './reducers/rentalReducers';
 import { searchReducer } from './reducers/searchReducers';
 import { rentalCartReducer } from './reducers/rentalcartReducers';
-import { orderCreateReducer } from './reducers/orderReducers'; // Add this
+import { orderCreateReducer } from './reducers/orderReducer'; // Ensure correct import
 
 const reducer = combineReducers({
     productsList: productsListReducers,
@@ -22,19 +23,19 @@ const reducer = combineReducers({
     rentalDetails: rentalDetailsReducers,
     productSearch: searchReducer,
     rentalCart: rentalCartReducer,
-    orderCreate: orderCreateReducer, // Add this
+    orderCreate: orderCreateReducer,
 });
 
-const cartItemsFromStorage = localStorage.getItem("cartItems")
-    ? JSON.parse(localStorage.getItem("cartItems"))
+const cartItemsFromStorage = localStorage.getItem('cartItems')
+    ? JSON.parse(localStorage.getItem('cartItems'))
     : [];
 
-const rentalItemsFromStorage = localStorage.getItem("rentalItems")
-    ? JSON.parse(localStorage.getItem("rentalItems"))
+const rentalItemsFromStorage = localStorage.getItem('rentalItems')
+    ? JSON.parse(localStorage.getItem('rentalItems'))
     : [];
 
-const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
-    ? JSON.parse(localStorage.getItem("shippingAddress"))
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
+    ? JSON.parse(localStorage.getItem('shippingAddress'))
     : {};
 
 const initialState = {
@@ -43,6 +44,7 @@ const initialState = {
         shippingAddress: shippingAddressFromStorage,
     },
     rentalCart: { rentalItems: rentalItemsFromStorage },
+    orderCreate: { loading: false, success: false, order: null, error: null }, // Initialize orderCreate
 };
 
 const middleware = [thunk];

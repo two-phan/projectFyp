@@ -26,6 +26,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
             type: ORDER_CREATE_SUCCESS,
             payload: data,
         });
+
+        if (order.payment_method === 'esewa') {
+            // Redirect to payment screen after order creation
+            return data; // Handled in PlaceOrderScreen
+        }
     } catch (error) {
         dispatch({
             type: ORDER_CREATE_FAIL,
